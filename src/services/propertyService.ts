@@ -7,6 +7,9 @@ const getPropertys = async (
   purpose: string,
   typeProperty: string,
   situation: string,
+  avaliation: string,
+  withPlate: string,
+  autorizationType: string,
   orderBy: string,
   sortDirection: string,
   searchTerm: string
@@ -16,7 +19,7 @@ const getPropertys = async (
   try {
     const res = await fetch(
       api +
-        `imovel?PageNumber=${page}&PageSize=15&Finalidade=${purpose}&TipoImovel=${typeProperty}&Situacao=${situation}&OrderBy=${orderBy}&SortDirection=${sortDirection}`,
+        `imovel?PageNumber=${page}&PageSize=15&Finalidade=${purpose}&TipoImovel=${typeProperty}&Situacao=${situation}&avaliacao=${avaliation}&ComPlaca=${withPlate}&TipoAutorizacao=${autorizationType}&OrderBy=${orderBy}&SortDirection=${sortDirection}`,
       config
     );
 

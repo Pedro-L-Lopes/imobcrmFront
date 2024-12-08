@@ -7,6 +7,7 @@ import { getPropertys } from "../../slices/propertySlice";
 import { PropertyType } from "../../types/property";
 import Message from "../utils/Message";
 import Pagination from "../utils/Pagination";
+import { MdArrowUpward } from "react-icons/md";
 
 function PropertyList() {
   const dispatch = useDispatch<AppDispatch>();
@@ -29,8 +30,13 @@ function PropertyList() {
     purpose: "",
     typeProperty: "",
     situation: "",
+    avaliation: "",
+    withPlate: "",
+    autorizationType: "",
     searchTerm: "",
   });
+
+  console.log(filters);
 
   useEffect(() => {
     dispatch(
@@ -42,6 +48,86 @@ function PropertyList() {
       })
     );
   }, [dispatch, filters, currentPage, orderBy, sortDirection]);
+
+  const ordinations = [
+    {
+      name: "ultimaedicao",
+      label: "Ultima Edição",
+    },
+    {
+      name: "valor",
+      label: "Valor",
+    },
+    {
+      name: "area",
+      label: "Área",
+    },
+    {
+      name: "bairro",
+      label: "Bairro",
+    },
+    {
+      name: "codigo",
+      label: "Código",
+    },
+  ];
+
+  const filterOptions = [
+    {
+      name: "purpose",
+      label: "Finalidade",
+      options: [
+        { value: "venda", label: "Venda" },
+        { value: "aluguel", label: "Aluguel" },
+      ],
+    },
+    {
+      name: "typeProperty",
+      label: "Tipo",
+      options: [
+        { value: "apartamento", label: "Apartamento" },
+        { value: "casa", label: "Casa" },
+        { value: "comercial", label: "Comercial" },
+        { value: "terreno", label: "Terreno" },
+      ],
+    },
+    {
+      name: "situation",
+      label: "Situação",
+      options: [
+        { value: "disponivel", label: "Disponível" },
+        { value: "moderacao", label: "Moderação" },
+        { value: "alugado", label: "Alugado" },
+        { value: "alugado/disponivelvenda", label: "Alugado/Disponível Venda" },
+        { value: "vendido", label: "Vendido" },
+      ],
+    },
+    {
+      name: "avaliation",
+      label: "Avaliação",
+      options: [
+        { value: "true", label: "Com Avaliação" },
+        { value: "false", label: "Sem Avaliação" },
+      ],
+    },
+    {
+      name: "withPlate",
+      label: "Placa/Adesivo",
+      options: [
+        { value: "true", label: "Com Placa/adesivo" },
+        { value: "false", label: "Sem Placa/adesivo" },
+      ],
+    },
+    {
+      name: "autorizationType",
+      label: "Autorização",
+      options: [
+        { value: "com exclusividade", label: "Com Exclusividade" },
+        { value: "sem exclusividade", label: "Sem Exclusividade" },
+        { value: "sem autorizacao", label: "Sem Autorização" },
+      ],
+    },
+  ];
 
   const handleFilterChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -55,74 +141,55 @@ function PropertyList() {
       <header className="text-2xl font-medium mb-4">Lista de Imóveis</header>
 
       <div className="flex flex-wrap gap-4 mb-6">
-        {["purpose", "typeProperty", "situation"].map((filter) => (
+        {filterOptions.map((filter) => (
           <select
-            key={filter}
-            name={filter}
-            value={filters[filter as keyof typeof filters]}
+            key={filter.name}
+            name={filter.name}
+            value={filters[filter.name as keyof typeof filters]}
             onChange={handleFilterChange}
             className="border rounded-lg px-4 py-2"
           >
-            <option value="">
-              {filter === "purpose"
-                ? "Finalidade"
-                : filter === "typeProperty"
-                ? "Tipo"
-                : "Situação"}
-            </option>
-            {filter === "purpose" && (
-              <>
-                <option value="venda">Venda</option>
-                <option value="aluguel">Aluguel</option>
-              </>
-            )}
-            {filter === "typeProperty" && (
-              <>
-                <option value="apartamento">Apartamento</option>
-                <option value="casa">Casa</option>
-                <option value="comercial">Comercial</option>
-                <option value="terreno">Terreno</option>
-              </>
-            )}
-            {filter === "situation" && (
-              <>
-                <option value="disponivel">Disponível</option>
-                <option value="moderacao">Moderação</option>
-                <option value="alugado">Alugado</option>
-                <option value="vendido">Vendido</option>
-              </>
-            )}
+            <option value="">{filter.label}</option>
+            {filter.options.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
           </select>
         ))}
-        <input
-          type="text"
-          name="searchTerm"
-          placeholder="Buscar por palavra-chave"
-          value={filters.searchTerm}
-          onChange={handleFilterChange}
-          className="border rounded-lg px-4 py-2 flex-1"
-        />
       </div>
 
+      {/* <input
+        type="text"
+        name="searchTerm"
+        placeholder="Buscar por palavra-chave"
+        value={filters.searchTerm}
+        onChange={handleFilterChange}
+        className="border rounded-lg px-4 py-2 flex-1"
+      /> */}
+
       <div className="flex items-center gap-4 mb-4">
-        {["ultimadicao", "valor", "area", "bairro", "codigo"].map((field) => (
-          <button
-            key={field}
-            onClick={() => handleSort(field)}
-            className={`px-4 py-2 ${
-              orderBy === field
-                ? "bg-blue-600 text-white"
-                : "bg-gray-200 text-gray-800"
-            }`}
-          >
-            {field.charAt(0).toUpperCase() + field.slice(1)}
-          </button>
-        ))}
+        <select
+          value={orderBy}
+          onChange={(e) => handleSort(e.target.value)}
+          className="px-4 py-2 text-gray-800 bg-gray-50 border rounded-lg"
+        >
+          {ordinations.map((field) => (
+            <option key={field.name} value={field.name}>
+              Ordenar por: {field.label}
+            </option>
+          ))}
+        </select>
+
         <button
           onClick={() => handleSort(orderBy)}
-          className="px-4 py-2 bg-gray-200 text-gray-800"
+          className="px-4 py-2 text-gray-800 bg-gray-50 border rounded-lg"
         >
-          {sortDirection === "asc" ? "Ascendente ↑" : "Descendente ↓"}
+          {sortDirection === "asc" ? (
+            <MdArrowUpward size={23} />
+          ) : (
+            <MdArrowUpward size={23} className="rotate-180" />
+          )}
         </button>
       </div>
 

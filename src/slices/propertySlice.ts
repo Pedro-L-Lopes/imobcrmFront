@@ -29,6 +29,9 @@ interface GetPropertysParams {
   purpose: string;
   typeProperty: string;
   situation: string;
+  avaliation: string;
+  withPlate: string;
+  autorizationType: string;
   orderBy: string;
   sortDirection: string;
   searchTerm: string;
@@ -42,6 +45,9 @@ export const getPropertys = createAsyncThunk(
       purpose,
       typeProperty,
       situation,
+      avaliation,
+      withPlate,
+      autorizationType,
       orderBy,
       sortDirection,
       searchTerm,
@@ -54,6 +60,9 @@ export const getPropertys = createAsyncThunk(
         purpose,
         typeProperty,
         situation,
+        avaliation,
+        withPlate,
+        autorizationType,
         orderBy,
         sortDirection,
         searchTerm
