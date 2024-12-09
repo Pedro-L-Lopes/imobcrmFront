@@ -42,26 +42,29 @@ function ClientList() {
 
   return (
     <div>
-      <header className="text-2xl font-medium ml-4 mt-5">
-        Listagem de clientes
+      <header className="text-3xl font-bold text-gray-800 ml-4 mt-8">
+        Listagem de Clientes
       </header>
-      <div className="p-6 bg-gray-50 rounded-lg shadow-lg">
-        <div className="flex items-center justify-between mb-4">
+
+      <div className="p-8 bg-white rounded-lg shadow-md mt-6 space-y-6">
+        <div className="flex items-center justify-between">
           <Search onSearch={handleSearch} />
           <Link to="/novo-cliente">
-            <button className="bg-blue-600 text-white p-2 font-medium rounded-md hover:opacity-90 transition-all">
-              Inserir cliente
+            <button className="bg-blue-600 text-white px-4 py-2 font-semibold rounded-md shadow-md hover:bg-blue-500 transition">
+              Inserir Cliente
             </button>
           </Link>
         </div>
 
         {error && <Message text={message} type="error" />}
+
         {loading ? (
-          <div className="text-center text-gray-500">Carregando...</div>
+          <div className="text-center text-gray-500 font-medium">
+            Carregando...
+          </div>
         ) : clients && clients.length > 0 ? (
           <>
             <ClientsTable clients={clients} handleSort={handleSort} />
-
             <Pagination
               currentPage={currentPage}
               totalPages={totalPages}
@@ -70,7 +73,7 @@ function ClientList() {
             />
           </>
         ) : (
-          <div className="text-center text-gray-500">
+          <div className="text-center text-gray-500 font-medium">
             Nenhum cliente encontrado.
           </div>
         )}

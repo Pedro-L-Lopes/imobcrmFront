@@ -9,68 +9,55 @@ interface ClientsTableProps {
 
 const ClientsTable: React.FC<ClientsTableProps> = ({ clients, handleSort }) => {
   return (
-    <table className="min-w-full text-sm text-gray-700">
-      <thead className="bg-blue-600 text-white">
+    <table className="w-full text-sm text-gray-800 rounded-lg overflow-hidden shadow-lg">
+      <thead className="bg-blue-600 text-white uppercase text-xs tracking-wider">
         <tr>
-          <th
-            className="w-20 px-4 py-3 border-x text-center cursor-pointer hover:bg-blue-500"
-            onClick={() => handleSort("tipoCliente")}
-          >
-            <p className="flex items-center gap-1">
-              Tipo
-              <MdOutlineCode className="rotate-90" />
-            </p>
-          </th>
-          <th
-            className="w-10 px-4 py-3 border-x text-center cursor-pointer hover:bg-blue-500"
-            onClick={() => handleSort("codigo")}
-          >
-            <p className="flex items-center gap-1">
-              Código
-              <MdOutlineCode className="rotate-90" />
-            </p>
-          </th>
-          <th
-            className="w-36 px-4 py-3 border-x text-center cursor-pointer hover:bg-blue-500"
-            onClick={() => handleSort("nome")}
-          >
-            <p className="flex items-center gap-1">
-              Nome
-              <MdOutlineCode className="rotate-90" />
-            </p>
-          </th>
-          <th className="px-6 py-3 border-x text-left">Telefone</th>
-          <th className="px-6 py-3 border-x text-left">Email</th>
-          <th className="px-6 py-3 border-x text-left">CPF/CNPJ</th>
-          <th className="px-6 py-3 border-x text-center">Ações</th>
+          {[
+            { label: "Tipo", width: "w-20", sortKey: "tipoCliente" },
+            { label: "Código", width: "w-10", sortKey: "codigo" },
+            { label: "Nome", width: "w-36", sortKey: "nome" },
+            { label: "Telefone", width: "px-6" },
+            { label: "Email", width: "px-6" },
+            { label: "CPF/CNPJ", width: "px-6" },
+            { label: "Ações", width: "px-6 text-center" },
+          ].map((col) => (
+            <th
+              key={col.label}
+              className={`${col.width} px-4 py-3 border-x text-center cursor-pointer hover:bg-blue-500`}
+              onClick={col.sortKey ? () => handleSort(col.sortKey) : undefined}
+            >
+              <p className="flex items-center gap-1">
+                {col.label}
+                {col.sortKey && <MdOutlineCode className="rotate-90" />}
+              </p>
+            </th>
+          ))}
         </tr>
       </thead>
+
       <tbody>
         {clients.map((cliente) => (
-          <tr key={cliente.clienteId} className="hover:bg-gray-100 border-b">
-            <td className="px-6 py-4 border-x text-center truncate">
+          <tr
+            key={cliente.clienteId}
+            className="hover:bg-gray-50 even:bg-gray-100"
+          >
+            <td className="px-6 py-4 text-center truncate border-r">
               {cliente.tipoCliente === "Pessoa Fisica" ? "PF" : "PJ"}
             </td>
-            <td className="px-6 py-4 border-x truncate w-16 text-center">
+            <td className="px-6 py-4 text-center truncate border-r">
               {cliente.codigo}
             </td>
             <td
-              className="w-96 px-6 py-4 border-x truncate"
+              className="px-6 py-4 truncate border-r"
               style={{ width: "50%" }}
             >
               {cliente.nome}
             </td>
-            <td className="w-36 px-6 py-4 border-x truncate">
-              {cliente.telefone}
-            </td>
-            <td className="w-36 px-6 py-4 border-x truncate">
-              {cliente.email}
-            </td>
-            <td className="w-36 px-6 py-4 border-x truncate">
-              {cliente.cpfCnpj}
-            </td>
-            <td className="px-6 py-4 border-x text-center">
-              <select className="bg-transparent cursor-pointer hover:text-blue-600 focus:outline-none">
+            <td className="px-6 py-4 truncate border-r">{cliente.telefone}</td>
+            <td className="px-6 py-4 truncate border-r">{cliente.email}</td>
+            <td className="px-6 py-4 truncate border-r">{cliente.cpfCnpj}</td>
+            <td className="px-6 py-4 text-center">
+              <select className="bg-gray-100 border border-gray-300 rounded-md px-2 py-1 text-gray-700 focus:outline-none hover:bg-gray-200 cursor-pointer">
                 <option>Ações</option>
                 <option>Detalhes</option>
                 <option>Editar</option>

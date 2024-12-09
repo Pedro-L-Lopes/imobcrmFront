@@ -25,6 +25,12 @@ export interface PropertyType {
   varanda?: number;
   garagem?: number;
 
+  avaliacao?: boolean;
+  AvaliacaoValor: number;
+  DataAvaliacao: Date;
+
+  comPlaca?: Boolean;
+
   valorAutorizacao?: number;
   tipoAutorizacao?: string;
   dataAutorizacao?: Date;

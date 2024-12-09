@@ -83,71 +83,80 @@ const InsertClient = () => {
 
   return (
     <div className="p-6 bg-gray-50 rounded-lg shadow-lg">
+      {/* Mensagem de erro ou sucesso */}
       <Message text={message} type={error ? "error" : "success"} />
+
+      {/* Botão de voltar */}
       <Link
         to="/clientes"
-        className="flex items-center justify-center gap-2 hover:opacity-70 transition-all w-10 h-10 mb-5 bg-gray-200 rounded-md hover:shadow-sm"
+        className="flex items-center justify-center gap-2 w-10 h-10 mb-5 bg-gray-200 rounded-full hover:bg-gray-300 transition-shadow shadow-sm"
+        title="Voltar"
       >
-        <MdArrowBack size={25} />
+        <MdArrowBack size={24} />
       </Link>
-      <h2 className="text-lg font-bold mb-4">Inserir Cliente</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Formulário */}
-        <div className="flex flex-wrap gap-4">
-          <div className="flex-1">
-            <label className="block font-medium">
+
+      {/* Título */}
+      <h2 className="text-lg font-bold mb-6">Inserir Cliente</h2>
+
+      {/* Formulário */}
+      <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Primeira linha: Tipo de cliente, Nome, e Email */}
+        <div className="grid md:grid-cols-3 gap-4">
+          <div>
+            <label className="block font-medium mb-1">
               Pessoa Física ou Jurídica
             </label>
             <select
               value={tipoCliente}
               onChange={handleTipoClienteChange}
-              className="w-full px-4 py-2 border rounded-md"
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="Pessoa Fisica">Pessoa Física</option>
               <option value="Pessoa Juridica">Pessoa Jurídica</option>
             </select>
           </div>
-
-          <div className="flex-1">
-            <label className="block font-medium">Nome</label>
+          <div>
+            <label className="block font-medium mb-1">Nome</label>
             <input
               type="text"
               value={nome}
               onChange={(e) => setNome(e.target.value)}
               required
-              className="w-full px-4 py-2 border rounded-md"
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
-
-          <div className="flex-1">
-            <label className="block font-medium">Email</label>
+          <div>
+            <label className="block font-medium mb-1">Email</label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 border rounded-md"
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
         </div>
 
-        <div className="flex flex-wrap gap-4">
-          <div className="flex-1">
-            <label className="block font-medium">Telefone</label>
+        {/* Segunda linha: Telefone e CPF/CNPJ */}
+        <div className="grid md:grid-cols-2 gap-4">
+          <div>
+            <label className="block font-medium mb-1">Telefone</label>
             <input
               type="text"
               value={telefone}
               onChange={(e) => setTelefone(e.target.value)}
-              className="w-full px-4 py-2 border rounded-md"
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
-
-          <div className="flex-1">
-            <label className="flex items-center gap-3 font-medium">
+          <div>
+            <label className="block font-medium mb-1 flex items-center gap-2">
               {tipoCliente === "Pessoa Fisica" ? "CPF" : "CNPJ"}
               <Tooltip.Provider>
                 <Tooltip.Root>
                   <Tooltip.Trigger asChild>
-                    <button>
+                    <button
+                      type="button"
+                      className="text-blue-500 hover:text-blue-600 focus:outline-none"
+                    >
                       <FaQuestionCircle />
                     </button>
                   </Tooltip.Trigger>
@@ -156,10 +165,9 @@ const InsertClient = () => {
                       sideOffset={5}
                       side="top"
                       align="center"
-                      className="bg-blue-500 rounded-md text-white p-2"
+                      className="bg-blue-500 rounded-md text-white p-2 text-sm shadow-lg"
                     >
-                      Você pode adicionar um CPF/CNPJ não existente, <br />
-                      mas priorize adicionar um existente sempre que possível
+                      Adicione um CPF/CNPJ válido, sempre que possível.
                       <Tooltip.Arrow className="fill-blue-500" />
                     </Tooltip.Content>
                   </Tooltip.Portal>
@@ -172,43 +180,45 @@ const InsertClient = () => {
               onChange={handleCpfCnpjChange}
               maxLength={tipoCliente === "Pessoa Fisica" ? 11 : 14}
               required
-              className="w-full px-4 py-2 border rounded-md"
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
+        </div>
 
-          {tipoCliente === "Pessoa Fisica" && (
-            <div className="flex-1">
-              <label className="block font-medium">Sexo</label>
+        {/* Condicional: Campos específicos para Pessoa Física */}
+        {tipoCliente === "Pessoa Fisica" && (
+          <div className="grid md:grid-cols-2 gap-4">
+            <div>
+              <label className="block font-medium mb-1">Sexo</label>
               <select
                 value={sexo}
                 onChange={(e) => setSexo(e.target.value)}
-                className="w-full px-4 py-2 border rounded-md"
+                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option value="">Selecione</option>
                 <option value="M">Masculino</option>
                 <option value="F">Feminino</option>
-                <option value="O">Outro</option>
               </select>
             </div>
-          )}
-        </div>
-
-        {tipoCliente === "Pessoa Fisica" && (
-          <div className="w-full md:w-1/3">
-            <label className="block font-medium">Data de Nascimento</label>
-            <input
-              type="date"
-              value={dataNascimento}
-              onChange={(e) => setDataNascimento(e.target.value)}
-              className="w-full px-4 py-2 border rounded-md"
-            />
+            <div>
+              <label className="block font-medium mb-1">
+                Data de Nascimento
+              </label>
+              <input
+                type="date"
+                value={dataNascimento}
+                onChange={(e) => setDataNascimento(e.target.value)}
+                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
           </div>
         )}
 
-        <div className="flex justify-end mt-4">
+        {/* Botão de submit */}
+        <div className="flex justify-end">
           <button
             type="submit"
-            className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+            className="bg-blue-600 text-white px-6 py-2 rounded-md font-bold hover:bg-blue-700 transition"
           >
             Inserir Cliente
           </button>
