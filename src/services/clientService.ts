@@ -53,9 +53,26 @@ const getClients = async (
   }
 };
 
+// Listar clientes por nome e cpf/cnpj
+const getClientsByNameAndDocument = async (term: string) => {
+  const config = requestConfig("GET", null);
+
+  try {
+    const res = await fetch(api + `cliente/search?term=${term}`, config);
+    if (!res.ok) {
+      const error = await res.json();
+      throw new Error(error.message || "Erro ao processar a requisição.");
+    }
+    return res.json();
+  } catch (error: any) {
+    throw new Error(error.message || "Erro inesperado");
+  }
+};
+
 const clientService = {
   getClients,
   insertClient,
+  getClientsByNameAndDocument,
 };
 
 export default clientService;

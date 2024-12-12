@@ -37,8 +37,27 @@ interface GetPropertysParams {
   searchTerm: string;
 }
 
+export const insertProperty = createAsyncThunk(
+  "property/insert",
+  async (data: PropertyType, thunkAPI) => {
+    try {
+      const res = await propertyService.insertProperty(data);
+
+      if (res.status === "Error") {
+        return thunkAPI.rejectWithValue(
+          res.message || "Erro ao inserir imóvel"
+        );
+      }
+
+      return res.message || "Imóvel inserido com sucesso";
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message || "Erro inesperado");
+    }
+  }
+);
+
 export const getPropertys = createAsyncThunk(
-  "propertys/get",
+  "property/get",
   async (
     {
       currentPage,
@@ -91,6 +110,23 @@ export const propertySlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(insertProperty.pending, (state) => {
+        state.loading = true;
+        state.error = false;
+        state.success = false;
+      })
+      .addCase(insertProperty.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = false;
+        state.success = true;
+        state.message = "Imóvel adicionado";
+      })
+      .addCase(insertProperty.rejected, (state, action) => {
+        state.loading = false;
+        state.success = false;
+        state.error = true;
+        state.message = action.payload as string;
+      })
       .addCase(getPropertys.pending, (state) => {
         state.loading = true;
         state.error = false;

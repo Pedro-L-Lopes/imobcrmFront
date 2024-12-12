@@ -5,6 +5,7 @@ import { RootState, AppDispatch } from "../store";
 import { getLocations, reset } from "../slices/locationSlice";
 import SearchLocation from "../components/location/SearchLocation";
 import LocationList from "../components/location/LocationsList";
+import LocationSearch from "../components/location/LocationSearch";
 
 function Location() {
   const dispatch = useDispatch<AppDispatch>();

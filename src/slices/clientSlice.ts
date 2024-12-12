@@ -73,12 +73,31 @@ export const getClients = createAsyncThunk(
   }
 );
 
+export const getClientsByNameAndDocument = createAsyncThunk(
+  "client/getByNameAndDocument",
+  async (term: string, thunkAPI) => {
+    try {
+      const res = await clientService.getClientsByNameAndDocument(term);
+
+      if (res.status === "Error") {
+        return thunkAPI.rejectWithValue(res.message);
+      }
+
+      return res;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message || "Erro inesperado");
+    }
+  }
+);
+
 export const clientSlice = createSlice({
   name: "client",
   initialState,
   reducers: {
     reset: (state) => {
+      state.error = false;
       state.message = null;
+      state.success = false;
     },
   },
   extraReducers: (builder) => {
@@ -113,6 +132,21 @@ export const clientSlice = createSlice({
         state.currentPage = action.payload.currentPage;
       })
       .addCase(getClients.rejected, (state, action) => {
+        state.loading = false;
+        state.error = true;
+        state.message = action.payload as string;
+      })
+      .addCase(getClientsByNameAndDocument.pending, (state) => {
+        state.loading = true;
+        state.error = false;
+        state.message = null;
+      })
+      .addCase(getClientsByNameAndDocument.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.clients = action.payload;
+      })
+      .addCase(getClientsByNameAndDocument.rejected, (state, action) => {
         state.loading = false;
         state.error = true;
         state.message = action.payload as string;

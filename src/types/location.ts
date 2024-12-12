@@ -1,5 +1,5 @@
 export interface LocationType {
-  localizacaoId?: string;
+  localizacaoId?: number;
   codigo?: number;
   bairro?: string;
   cidade: string;

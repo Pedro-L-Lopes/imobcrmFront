@@ -1,11 +1,11 @@
 export interface PropertyType {
-  proprietarioid?: string;
-
-  imovelid?: string;
+  imovelId?: string;
   codigo?: number;
 
-  finalidade?: string;
+  proprietarioId?: string;
+
   destinacao?: string;
+  finalidade?: string;
   tipoImovel?: string;
   situacao?: string;
   valor?: number;
@@ -26,8 +26,8 @@ export interface PropertyType {
   garagem?: number;
 
   avaliacao?: boolean;
-  AvaliacaoValor: number;
-  DataAvaliacao: Date;
+  avaliacaoValor?: number;
+  dataAvaliacao?: Date;
 
   comPlaca?: Boolean;
 

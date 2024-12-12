@@ -1,5 +1,22 @@
 import { api, requestConfig } from "../lib/config";
+import { PropertyType } from "../types/property";
 //import { PropertyType } from "../types/property";
+
+// Adicionar imóvel
+const insertProperty = async (property: PropertyType) => {
+  const config = requestConfig("POST", property);
+
+  try {
+    const res = await fetch(api + `imovel`, config);
+    if (!res.ok) {
+      const error = await res.json();
+      throw new Error(error.message || "Erro ao processar a requisição.");
+    }
+    return res.json();
+  } catch (error: any) {
+    throw new Error(error.message || "Erro inesperado");
+  }
+};
 
 // Listagem de imóveis
 const getPropertys = async (
@@ -44,6 +61,7 @@ const getPropertys = async (
 };
 
 const propertyService = {
+  insertProperty,
   getPropertys,
 };
 

@@ -7,16 +7,16 @@ interface PropertyCardProps {
 
 const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
   return (
-    <div className="p-2 border bg-white flex flex-col lg:flex-row">
+    <div className="border bg-white flex flex-col lg:flex-row">
       {/* Espaço reservado para imagem */}
-      <div className="w-full lg:w-1/4 h-48 bg-gradient-to-r from-blue-500 to-blue-300 rounded-sm flex items-center justify-center text-white">
+      <div className="w-full lg:w-14 h-48 bg-gradient-to-r from-blue-500 to-blue-300 rounded-sm flex items-center justify-center text-white">
         <span className="flex items-center justify-center">
           <PiHouseLine size={"50%"} />
         </span>
       </div>
 
       {/* Detalhes do imóvel */}
-      <div className="w-full lg:w-3/4 ml-5 mt-5 space-y-2">
+      <div className="w-full ml-5 mt-5 mr-5 space-y-2">
         {/* Informações principais */}
         <div className="flex justify-between items-center">
           <div className="text-md font-semibold">

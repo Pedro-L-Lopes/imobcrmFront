@@ -23,6 +23,23 @@ interface GetLocationsParams {
   searchTerm2: string;
 }
 
+export const getLocationsByOneTerm = createAsyncThunk(
+  "client/getLocationsByOneTerm",
+  async (term: string, thunkAPI) => {
+    try {
+      const res = await locationService.getLocationsByOneTerm(term);
+
+      if (res.status === "Error") {
+        return thunkAPI.rejectWithValue(res.message);
+      }
+
+      return res;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message || "Erro inesperado");
+    }
+  }
+);
+
 export const getLocations = createAsyncThunk(
   "location/get",
   async ({ searchTerm1, searchTerm2 }: GetLocationsParams, thunkAPI) => {
@@ -50,6 +67,20 @@ export const locationSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(getLocationsByOneTerm.pending, (state) => {
+        state.loading = true;
+        state.error = false;
+      })
+      .addCase(getLocationsByOneTerm.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.locations = action.payload;
+      })
+      .addCase(getLocationsByOneTerm.rejected, (state, action) => {
+        state.loading = false;
+        state.error = true;
+        state.message = action.payload as string;
+      })
       .addCase(getLocations.pending, (state) => {
         state.loading = true;
         state.error = false;
