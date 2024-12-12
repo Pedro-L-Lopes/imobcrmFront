@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import StepProgress from "./StepProgress";
 import AddressOwnerForm from "./forms/AddressOwnerForm";
 import MainDetailsForm from "./forms/MainDetailsForm";
@@ -12,26 +12,80 @@ import { useSelector } from "react-redux";
 const InsertProperty: React.FC = () => {
   const dispatch = useAppDispatch();
 
-  const { error, success, message } = useSelector(
-    (state: any) => state.property
-  );
+  const { success } = useSelector((state: any) => state.property);
 
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState<PropertyType>({
     proprietarioId: "",
+
     rua: "",
     numero: "",
-    finalidade: "",
+    cep: "",
+
     tipoImovel: "",
+    finalidade: "",
+    destinacao: "",
+    situacao: "",
+
     valor: 0,
-    quartos: 0,
-    banheiros: 0,
-    garagem: 0,
-    area: 100,
+    valorCondominio: 0,
+
+    area: 0,
+
+    siteCod: "",
+
     observacoes: "",
     descricao: "",
+
+    quartos: 0,
+    suites: 0,
+    banheiros: 0,
+    salasEstar: 0,
+    salasJantar: 0,
+    varanda: 0,
+    garagem: 0,
+
+    avaliacao: false,
+    avaliacaoValor: 0,
+    dataAvaliacao: null,
+
+    comPlaca: false,
+
+    valorAutorizacao: 0,
+    tipoAutorizacao: "",
+    dataAutorizacao: null,
+
     localizacaoId: 0,
   });
+
+  // Validação de campos obrigatórios
+  const validateStep = () => {
+    const validations: Record<number, boolean> = {
+      0: !!formData.localizacaoId,
+      1:
+        !!formData.finalidade &&
+        !!formData.tipoImovel &&
+        !!formData.destinacao &&
+        !!formData.situacao,
+      2: !!formData.proprietarioId,
+    };
+
+    return validations[currentStep] ?? true;
+  };
+
+  console.log(formData.localizacaoId);
+
+  const handleNext = () => {
+    if (!validateStep()) {
+      alert("Por favor, preencha todos os campos obrigatórios.");
+      return;
+    }
+    setCurrentStep((prev) => prev + 1);
+  };
+
+  const handlePrev = () => {
+    setCurrentStep((prev) => prev - 1);
+  };
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -45,47 +99,33 @@ const InsertProperty: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    dispatch(insertProperty(formData));
+    if (!validateStep()) {
+      alert("Por favor, preencha todos os campos obrigatórios.");
+      return;
+    }
 
-    if (!formData.localizacaoId) {
-      alert("Por favor, selecione uma localização válida.");
-      return;
-    }
-    if (!formData.proprietarioId) {
-      alert("Por favor, selecione um proprietário válido.");
-      return;
-    }
+    dispatch(insertProperty(formData));
 
     if (success) {
       alert("Imóvel cadastrado com sucesso!");
       setFormData({
         proprietarioId: "",
+        rua: "",
+        numero: "",
         finalidade: "",
         tipoImovel: "",
-        destinacao: "",
-        descricao: "",
-        situacao: "",
-        rua: "",
-        observacoes: "",
-        numero: "",
         valor: 0,
+        quartos: 0,
+        banheiros: 0,
+        garagem: 0,
+        area: 0,
+        observacoes: "",
+        descricao: "",
         localizacaoId: 0,
       });
+      setCurrentStep(0);
     }
   };
-
-  const nextStep = () => {
-    if (currentStep < 3) setCurrentStep((prev) => prev + 1);
-  };
-
-  const prevStep = () => {
-    if (currentStep > 0) setCurrentStep((prev) => prev - 1);
-  };
-
-  useEffect(() => {
-    console.log(formData.localizacaoId);
-    console.log(formData.proprietarioId);
-  }, [formData.localizacaoId, formData.proprietarioId]);
 
   return (
     <div className="max-w-full mx-auto mt-10 p-6 bg-white rounded shadow">
@@ -93,18 +133,16 @@ const InsertProperty: React.FC = () => {
         CADASTRO DE IMÓVEL
       </h1>
 
-      {/* Componente de progresso */}
       <StepProgress currentStep={currentStep} />
 
       <form onSubmit={handleSubmit}>
-        {/* Renderiza os formulários com base na etapa */}
         <div className="mt-6">
           {currentStep === 0 && (
             <AddressOwnerForm
               formData={formData}
               handleChange={handleChange}
-              onSelectLocation={(locationIdId) =>
-                setFormData({ ...formData, localizacaoId: locationIdId })
+              onSelectLocation={(locationId) =>
+                setFormData({ ...formData, localizacaoId: locationId })
               }
             />
           )}
@@ -128,11 +166,10 @@ const InsertProperty: React.FC = () => {
           )}
         </div>
 
-        {/* Navegação entre etapas */}
         <div className="flex justify-between mt-6">
           <button
             type="button"
-            onClick={prevStep}
+            onClick={handlePrev}
             className="bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-600 transition"
             disabled={currentStep === 0}
           >
@@ -141,7 +178,7 @@ const InsertProperty: React.FC = () => {
           {currentStep < 3 ? (
             <button
               type="button"
-              onClick={nextStep}
+              onClick={handleNext}
               className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition"
             >
               Avançar

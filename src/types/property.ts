@@ -27,13 +27,13 @@ export interface PropertyType {
 
   avaliacao?: boolean;
   avaliacaoValor?: number;
-  dataAvaliacao?: Date;
+  dataAvaliacao?: Date | null;
 
   comPlaca?: Boolean;
 
   valorAutorizacao?: number;
   tipoAutorizacao?: string;
-  dataAutorizacao?: Date;
+  dataAutorizacao?: Date | null;
 
   rua?: string;
   numero?: string;

@@ -66,14 +66,14 @@ const LocationSearch: React.FC<locationSearchProps> = ({
   return (
     <main className="flex items-center gap-4">
       <div ref={componentRef} className="relative">
-        <label className="block font-semibold mb-1">Bairro</label>
+        <label className="font-semibold mb-1">Bairro</label>
         <input
           type="text"
           value={searchTerm}
           onChange={(e) => handleSearch(e.target.value)}
           onFocus={() => searchTerm.length >= 3 && setDropdownOpen(true)} // Reabre o dropdown ao focar
           className={`w-full border p-2 rounded ${
-            isValid ? "border-green-500" : "border-red-500"
+            isValid ? "border-green-500 bg-green-50" : "border-red-500 bg-red-50"
           }`}
         />
         {loading && <div className="absolute right-2 top-2">Carregando...</div>}
@@ -108,7 +108,7 @@ const LocationSearch: React.FC<locationSearchProps> = ({
         )}
       </div>
       <div>
-        <label htmlFor="cidade" className="block font-semibold mb-1">
+        <label htmlFor="cidade" className="font-semibold mb-1">
           Cidade - Estado
         </label>
         <input

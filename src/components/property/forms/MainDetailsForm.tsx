@@ -99,8 +99,59 @@ const MainDetailsForm: React.FC<MainDetailsProps> = ({
       </div>
     </section>
 
+    <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div>
+        <label htmlFor="valor" className="block font-semibold mb-1">
+          Valor
+        </label>
+        <input
+          type="number"
+          name="valor"
+          value={formData.valor}
+          onChange={handleChange}
+          className="w-full border border-gray-400 p-2 rounded"
+        />
+      </div>
+      <div>
+        <label htmlFor="valorCondominio" className="block font-semibold mb-1">
+          Valor do Condominio
+        </label>
+        <input
+          type="number"
+          name="valorCondominio"
+          value={formData.valorCondominio}
+          onChange={handleChange}
+          className="w-full border border-gray-400 p-2 rounded"
+        />
+      </div>
+      <div>
+        <label htmlFor="area" className="block font-semibold mb-1">
+          Área
+        </label>
+        <input
+          type="number"
+          name="area"
+          value={formData.area}
+          onChange={handleChange}
+          className="w-full border border-gray-400 p-2 rounded"
+        />
+      </div>
+      <div>
+        <label htmlFor="siteCod" className="block font-semibold mb-1">
+          Código site externo
+        </label>
+        <input
+          type="text"
+          name="siteCod"
+          value={formData.siteCod}
+          onChange={handleChange}
+          className="w-full border border-gray-400 p-2 rounded"
+        />
+      </div>
+    </section>
+
     <section>
-      <section className="flex w-full">
+      <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
         {/* Avaliação */}
         <section className="grid grid-cols-1 gap-2">
           <div>
@@ -152,7 +203,7 @@ const MainDetailsForm: React.FC<MainDetailsProps> = ({
           </div>
         </section>
 
-        <section className="grid grid-cols-1 gap-2">
+        <section className="grid grid-cols-1 gap-2 border">
           <div>
             <label
               htmlFor="valorAutorizacao"
@@ -203,50 +254,39 @@ const MainDetailsForm: React.FC<MainDetailsProps> = ({
             />
           </div>
         </section>
+
+        <section className="grid grid-cols-1 gap-2 border">
+          <div>
+            <div>
+              <label htmlFor="avaliacao" className="block font-semibold mb-1">
+                Avaliação
+              </label>
+              <select
+                name="avaliacao"
+                className="w-full border border-gray-400 p-2 rounded"
+                onChange={handleChange}
+              >
+                <option value="true">Sim</option>
+                <option value="false">Não</option>
+              </select>
+            </div>
+            <label htmlFor="comPlaca" className="block font-semibold mb-1">
+              Placa/adesivo
+            </label>
+            <select
+              name="comPlaca"
+              className="w-full border border-gray-400 p-2 rounded"
+              value={formData.avaliacao ? "true" : "false"}
+              onChange={handleChange}
+            >
+              <option value="true">Com placa/adesivo</option>
+              <option value="false">Sem placa/adesivo</option>
+            </select>
+          </div>
+        </section>
       </section>
-      <div>
-        <label htmlFor="comPlaca" className="block font-semibold mb-1">
-          Placa/adesivo
-        </label>
-        <select
-          name="comPlaca"
-          className="w-full border border-gray-400 p-2 rounded"
-          value={formData.avaliacao ? "true" : "false"}
-          onChange={handleChange}
-        >
-          <option value="true">Com placa/adesivo</option>
-          <option value="false">Sem placa/adesivo</option>
-        </select>
-      </div>
-      <div>
-        <label htmlFor="avaliacao" className="block font-semibold mb-1">
-          Avaliação
-        </label>
-        <select
-          name="avaliacao"
-          className="w-full border border-gray-400 p-2 rounded"
-          onChange={handleChange}
-        >
-          <option value="true">Sim</option>
-          <option value="false">Não</option>
-        </select>
-      </div>
     </section>
 
-    {/* Descrição */}
-    <section>
-      <div>
-        <label htmlFor="descricao" className="block font-semibold mb-1">
-          Descrição
-        </label>
-        <textarea
-          name="descricao"
-          value={formData.descricao || ""}
-          onChange={handleChange}
-          className="w-full border border-gray-400 p-2 rounded"
-        ></textarea>
-      </div>
-    </section>
     {/* Informações adicionais */}
     <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
       {[
@@ -279,6 +319,20 @@ const MainDetailsForm: React.FC<MainDetailsProps> = ({
           />
         </div>
       ))}
+    </section>
+    {/* Descrição */}
+    <section>
+      <div>
+        <label htmlFor="descricao" className="block font-semibold mb-1">
+          Descrição
+        </label>
+        <textarea
+          name="descricao"
+          value={formData.descricao || ""}
+          onChange={handleChange}
+          className="w-full border border-gray-400 p-2 rounded"
+        ></textarea>
+      </div>
     </section>
   </div>
 );
