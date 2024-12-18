@@ -73,7 +73,7 @@ const LocationSearch: React.FC<locationSearchProps> = ({
           onChange={(e) => handleSearch(e.target.value)}
           onFocus={() => searchTerm.length >= 3 && setDropdownOpen(true)} // Reabre o dropdown ao focar
           className={`w-full border p-2 rounded ${
-            isValid ? "border-green-500 bg-green-50" : "border-red-500 bg-red-50"
+            isValid ? "border-green-500 " : "border-red-500 bg-red-50"
           }`}
         />
         {loading && <div className="absolute right-2 top-2">Carregando...</div>}

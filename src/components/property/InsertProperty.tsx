@@ -8,12 +8,20 @@ import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { insertProperty } from "../../slices/propertySlice";
 import { PropertyType } from "../../types/property";
 import { useSelector } from "react-redux";
+import InsertHeader from "../InsertHeader";
+import { area } from "motion/react-client";
+import Message from "../utils/Message";
+import { useNavigate } from "react-router-dom";
 
 const InsertProperty: React.FC = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-  const { success } = useSelector((state: any) => state.property);
+  const { success, error, message } = useSelector(
+    (state: any) => state.property
+  );
 
+  const [showError, setShowError] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState<PropertyType>({
     proprietarioId: "",
@@ -51,8 +59,8 @@ const InsertProperty: React.FC = () => {
 
     comPlaca: false,
 
+    tipoAutorizacao: "sem autorizacao",
     valorAutorizacao: 0,
-    tipoAutorizacao: "",
     dataAutorizacao: null,
 
     localizacaoId: 0,
@@ -66,18 +74,22 @@ const InsertProperty: React.FC = () => {
         !!formData.finalidade &&
         !!formData.tipoImovel &&
         !!formData.destinacao &&
-        !!formData.situacao,
-      2: !!formData.proprietarioId,
+        !!formData.situacao &&
+        !!formData.valor &&
+        !!formData.area &&
+        !!formData.descricao,
+      3: !!formData.proprietarioId,
     };
 
     return validations[currentStep] ?? true;
   };
 
-  console.log(formData.localizacaoId);
-
   const handleNext = () => {
     if (!validateStep()) {
-      alert("Por favor, preencha todos os campos obrigatórios.");
+      setShowError(true);
+      setTimeout(() => {
+        setShowError(false);
+      }, 3000);
       return;
     }
     setCurrentStep((prev) => prev + 1);
@@ -87,14 +99,43 @@ const InsertProperty: React.FC = () => {
     setCurrentStep((prev) => prev - 1);
   };
 
+  console.log(formData.valor);
+
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    const { name, value, type } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]:
+        type === "checkbox" && e.target instanceof HTMLInputElement
+          ? e.target.checked
+          : name === "avaliacao" || name === "comPlaca"
+          ? value === "true"
+          : [
+              "valor",
+              "valorCondominio",
+              "area",
+              "avaliacaoValor",
+              "localizacaoId",
+              "valorAutorizacao",
+              "quartos",
+              "suites",
+              "banheiros",
+              "salasEstar",
+              "salasJantar",
+              "varanda",
+              "garagem",
+            ].includes(name)
+          ? Number(value)
+          : value,
+    }));
   };
+
+  console.log(message);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -107,28 +148,39 @@ const InsertProperty: React.FC = () => {
     dispatch(insertProperty(formData));
 
     if (success) {
-      alert("Imóvel cadastrado com sucesso!");
-      setFormData({
-        proprietarioId: "",
-        rua: "",
-        numero: "",
-        finalidade: "",
-        tipoImovel: "",
-        valor: 0,
-        quartos: 0,
-        banheiros: 0,
-        garagem: 0,
-        area: 0,
-        observacoes: "",
-        descricao: "",
-        localizacaoId: 0,
-      });
-      setCurrentStep(0);
+      navigate("/imoveis");
     }
-  };
 
+    // if (success) {
+    //   alert("Imóvel cadastrado com sucesso!");
+    //   setFormData({
+    //     proprietarioId: "",
+    //     rua: "",
+    //     numero: "",
+    //     finalidade: "",
+    //     tipoImovel: "",
+    //     valor: 0,
+    //     quartos: 0,
+    //     banheiros: 0,
+    //     garagem: 0,
+    //     area: 0,
+    //     observacoes: "",
+    //     descricao: "",
+    //     localizacaoId: 0,
+    //   });
+    //   setCurrentStep(0);
+    // }
+  };
   return (
-    <div className="max-w-full mx-auto mt-10 p-6 bg-white rounded shadow">
+    <div className="max-w-full mx-auto mt-3 p-6 rounded shadow">
+      {showError && (
+        <Message
+          text="Por favor, preencha todos os campos obrigatórios."
+          type="error"
+        />
+      )}
+      <Message type="error" text={error} />
+      <InsertHeader url="/imoveis" title="" />
       <h1 className="text-2xl text-center font-bold mb-6">
         CADASTRO DE IMÓVEL
       </h1>
@@ -150,18 +202,18 @@ const InsertProperty: React.FC = () => {
             <MainDetailsForm formData={formData} handleChange={handleChange} />
           )}
           {currentStep === 2 && (
+            <NotesDescriptionForm
+              formData={formData}
+              handleChange={handleChange}
+            />
+          )}
+          {currentStep === 3 && (
             <AdditionalDetailsForm
               formData={formData}
               handleChange={handleChange}
               onSelectOwner={(clientId) =>
                 setFormData({ ...formData, proprietarioId: clientId })
               }
-            />
-          )}
-          {currentStep === 3 && (
-            <NotesDescriptionForm
-              formData={formData}
-              handleChange={handleChange}
             />
           )}
         </div>

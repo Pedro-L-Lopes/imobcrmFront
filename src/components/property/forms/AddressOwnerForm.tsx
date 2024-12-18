@@ -52,6 +52,7 @@ const AddressOwnerForm: React.FC<AddressOwnerProps> = ({
           value={formData.numero}
           onChange={handleChange}
           className="w-full border p-2 rounded"
+          required
         />
       </div>
 

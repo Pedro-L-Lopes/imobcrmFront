@@ -3,6 +3,7 @@ import { getClientsByNameAndDocument } from "../../slices/clientSlice";
 import { ClientType } from "../../types/client";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { Link } from "react-router-dom";
 
 type ClientSearchProps = {
   onClientSelect: (clientId: string) => void;
@@ -55,10 +56,10 @@ const ClientSearch: React.FC<ClientSearchProps> = ({ onClientSelect }) => {
     <div ref={componentRef} className="relative">
       <input
         type="text"
-        placeholder="Pesquise por Nome ou CPF/cnpj"
+        placeholder="Pesquise por Nome ou CPF/CNPJ"
         value={searchTerm}
         onChange={(e) => handleSearch(e.target.value)}
-        onFocus={() => searchTerm.length >= 3 && setDropdownOpen(true)} // Reabre o dropdown ao focar
+        onFocus={() => searchTerm.length >= 2 && setDropdownOpen(true)} // Reabre o dropdown ao focar
         className="w-full border p-2 rounded"
       />
       {loading && <div className="absolute right-2 top-2">Carregando...</div>}
@@ -77,7 +78,8 @@ const ClientSearch: React.FC<ClientSearchProps> = ({ onClientSelect }) => {
                     <strong>{client.nome}</strong>
                   </div>
                   <div className="text-sm text-gray-500">
-                    CPF: {client.cpfCnpj} | Tel: {client.telefone}
+                    Cód.: {client.codigo} | CPF: {client.cpfCnpj} | Tel:{" "}
+                    {client.telefone}
                   </div>
                 </div>
               ))
@@ -88,9 +90,11 @@ const ClientSearch: React.FC<ClientSearchProps> = ({ onClientSelect }) => {
               )}
 
           {/* Botão para incluir pessoa */}
-          <div className="p-2 cursor-pointer hover:bg-gray-100 font-bold border-t">
-            + Incluir cliente
-          </div>
+          <Link to="/novo-cliente" target="_blank" rel="noopener noreferrer">
+            <div className="p-2 cursor-pointer hover:bg-gray-100 font-bold border-t">
+              + Incluir cliente
+            </div>
+          </Link>
         </div>
       )}
     </div>

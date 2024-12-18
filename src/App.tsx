@@ -8,7 +8,7 @@ import Home from "./pages/Home";
 
 function App() {
   return (
-    <>
+    <div>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -22,7 +22,7 @@ function App() {
           <Route path="/novo-imovel" element={<InsertProperty />} />
         </Routes>
       </BrowserRouter>
-    </>
+    </div>
   );
 }
 
