@@ -62,7 +62,7 @@ export const filterOptions = [
       { value: "moderacao", label: "Moderação" },
       { value: "alugado", label: "Alugado" },
       { value: "vendido", label: "Vendido" },
-      { value: "alugado/disponivelvenda", label: "Alugado/Disponível Venda" },
+      { value: "alugado/Disponivel Venda", label: "Alugado/Disponível Venda" },
       { value: "em reforma", label: "Em Reforma" },
       { value: "indisponivel", label: "Indisponível" },
     ],

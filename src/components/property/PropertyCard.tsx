@@ -63,6 +63,17 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
             className={`px-3 py-1 rounded text-white font-bold ${
               property.situacao?.toLowerCase() === "disponivel"
                 ? "bg-green-600"
+                : property.situacao?.toLowerCase() === "moderacao"
+                ? "bg-yellow-600"
+                : property.situacao?.toLowerCase() === "alugado"
+                ? "bg-blue-600"
+                : property.situacao?.toLowerCase() === "vendido"
+                ? "bg-gray-600"
+                : property.situacao?.toLowerCase() ===
+                  "alugado/disponivel venda"
+                ? "bg-teal-600"
+                : property.situacao?.toLowerCase() === "em reforma"
+                ? "bg-orange-600"
                 : property.situacao?.toLowerCase() === "indisponivel"
                 ? "bg-red-600"
                 : "bg-yellow-600"

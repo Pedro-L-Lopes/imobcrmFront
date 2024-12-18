@@ -16,7 +16,7 @@ const AddressOwnerForm: React.FC<AddressOwnerProps> = ({
   handleChange,
   onSelectLocation,
 }) => (
-  <div>
+  <main className="flex items-center justify-center h-28 border p-2 rounded-md">
     <section className="flex items-center gap-4">
       <div>
         <label htmlFor="cep" className="block font-semibold mb-1">
@@ -58,7 +58,7 @@ const AddressOwnerForm: React.FC<AddressOwnerProps> = ({
 
       <LocationSearch onlocationSelect={onSelectLocation} />
     </section>
-  </div>
+  </main>
 );
 
 export default AddressOwnerForm;

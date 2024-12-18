@@ -140,12 +140,7 @@ const InsertProperty: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!validateStep()) {
-      alert("Por favor, preencha todos os campos obrigatórios.");
-      return;
-    }
-
-    dispatch(insertProperty(formData));
+      dispatch(insertProperty(formData));
 
     if (success) {
       navigate("/imoveis");
