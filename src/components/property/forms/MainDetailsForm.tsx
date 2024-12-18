@@ -1,22 +1,6 @@
-import React, { useState } from "react";
 import { filterOptions } from "../../../utils/propertyUtils";
 import { PropertyType } from "../../../types/property";
-
-// Função utilitária para formatar o valor em formato monetário
-const formatCurrency = (value: number | string) => {
-  if (!value) return "";
-  const numberValue = Number(value);
-  return numberValue.toLocaleString("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-  });
-};
-
-// Função para desformatar a string do input para um número puro
-const parseCurrency = (value: string) => {
-  const cleanValue = value.replace(/\D/g, ""); // Remove todos os caracteres não numéricos
-  return Number(cleanValue) / 100; // Divide por 100 para adicionar as casas decimais
-};
+import CurrencyInput from "../../utils/CurrencyInput";
 
 interface MainDetailsProps {
   formData: PropertyType;
@@ -31,35 +15,9 @@ const MainDetailsForm: React.FC<MainDetailsProps> = ({
   formData,
   handleChange,
 }) => {
-  // Estados locais para valor e valorCondominio (formatados)
-  const [valorFormatted, setValorFormatted] = useState(
-    formatCurrency(formData.valor!)
-  );
-  const [valorCondominioFormatted, setValorCondominioFormatted] = useState(
-    formatCurrency(formData.valorCondominio!)
-  );
-
-  const [valorAvaliacaoFormatted, setValorAvaliacaoFormatted] = useState(
-    formatCurrency(formData.avaliacaoValor!)
-  );
-
-  const [valorAutorizacaoFormatted, setValorAutorizacaoFormatted] = useState(
-    formatCurrency(formData.avaliacaoValor!)
-  );
-
-  // Função para manipular mudança de valor
-  const handleCurrencyChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    fieldName: string,
-    setFormatted: React.Dispatch<React.SetStateAction<string>>
-  ) => {
-    const { value } = e.target;
-    const numericValue = parseCurrency(value);
-    setFormatted(formatCurrency(numericValue));
-
-    // Atualiza o valor numérico no estado pai
+  const handleCurrencyChange = (fieldName: string, value: number) => {
     handleChange({
-      target: { name: fieldName, value: numericValue },
+      target: { name: fieldName, value },
     } as any);
   };
 
@@ -67,6 +25,7 @@ const MainDetailsForm: React.FC<MainDetailsProps> = ({
     <main className="p-2 shadow-md rounded-md">
       <main className="p-2 shadow-md rounded-md">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 gap-10">
+          {/* Seção 1 - Finalidade, Tipo imóvel, Destinação e Situação*/}
           <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 gap-4">
             {/* Finalidade */}
             <div>
@@ -172,23 +131,21 @@ const MainDetailsForm: React.FC<MainDetailsProps> = ({
             </div>
           </section>
 
-          {/* Valores */}
+          {/* Seção 2 - Valor, Valor condomínio, Área m² e Código Site*/}
           <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 gap-4">
+            {/* Valores */}
             <div>
               <label htmlFor="valor" className="block font-semibold mb-1">
                 Valor
               </label>
-              <input
-                type="text"
-                name="valor"
-                value={valorFormatted}
-                onChange={(e) =>
-                  handleCurrencyChange(e, "valor", setValorFormatted)
-                }
-                className={`w-full border p-2 rounded ${
-                  formData.valor! > 0
-                    ? "border-green-500"
-                    : "border-red-500 bg-red-50"
+              <CurrencyInput
+                value={formData.valor!}
+                fieldName="valor"
+                onChange={handleCurrencyChange}
+                className={`w-full p-2 rounded ${
+                  formData.valor
+                    ? "border border-gray-400"
+                    : "border border-red-500 bg-red-50"
                 }`}
               />
             </div>
@@ -199,18 +156,11 @@ const MainDetailsForm: React.FC<MainDetailsProps> = ({
               >
                 Valor do Condomínio
               </label>
-              <input
-                type="text"
-                name="valorCondominio"
-                value={valorCondominioFormatted}
-                onChange={(e) =>
-                  handleCurrencyChange(
-                    e,
-                    "valorCondominio",
-                    setValorCondominioFormatted
-                  )
-                }
-                className="w-full border border-gray-400 p-2 rounded"
+              <CurrencyInput
+                value={formData.valorCondominio!}
+                fieldName="valorCondominio"
+                onChange={handleCurrencyChange}
+                className={"w-full border border-gray-400 p-2 rounded"}
               />
             </div>
             <div>
@@ -243,8 +193,9 @@ const MainDetailsForm: React.FC<MainDetailsProps> = ({
             </div>
           </section>
 
-          {/* Avaliação */}
+          {/* Seção 3 - Avaliação, Tipo de Autorização e Com/Sem Placa*/}
           <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-10">
+            {/* Avaliação */}
             <section className="grid grid-cols-1 gap-2">
               <div>
                 <label htmlFor="avaliacao" className="block font-semibold mb-1">
@@ -270,18 +221,11 @@ const MainDetailsForm: React.FC<MainDetailsProps> = ({
                     >
                       Valor Avaliação
                     </label>
-                    <input
-                      type="text"
-                      name="avaliacaoValor"
-                      value={valorAvaliacaoFormatted}
-                      onChange={(e) =>
-                        handleCurrencyChange(
-                          e,
-                          "valorCondominio",
-                          setValorAvaliacaoFormatted
-                        )
-                      }
-                      className="w-full border border-gray-400 p-2 rounded"
+                    <CurrencyInput
+                      value={formData.avaliacaoValor!}
+                      fieldName="avaliacaoValor"
+                      onChange={handleCurrencyChange}
+                      className={"w-full border border-gray-400 p-2 rounded"}
                     />
                   </div>
 
@@ -342,18 +286,11 @@ const MainDetailsForm: React.FC<MainDetailsProps> = ({
                     >
                       Valor Autorização
                     </label>
-                    <input
-                      type="text"
-                      name="valorAutorizacao"
-                      value={valorAutorizacaoFormatted}
-                      onChange={(e) =>
-                        handleCurrencyChange(
-                          e,
-                          "valorCondominio",
-                          setValorAutorizacaoFormatted
-                        )
-                      }
-                      className="w-full border border-gray-400 p-2 rounded"
+                    <CurrencyInput
+                      value={formData.avaliacaoValor!}
+                      fieldName="avaliacaoAutorizacao"
+                      onChange={handleCurrencyChange}
+                      className={"w-full border border-gray-400 p-2 rounded"}
                     />
                   </div>
 
@@ -401,8 +338,9 @@ const MainDetailsForm: React.FC<MainDetailsProps> = ({
             </div>
           </section>
 
-          {/* Descrição */}
+          {/* Seção 4 - Descrição*/}
           <section>
+            {/* Descrição */}
             <label htmlFor="descricao" className="block font-semibold mt-2">
               Descrição
             </label>
@@ -419,7 +357,7 @@ const MainDetailsForm: React.FC<MainDetailsProps> = ({
             <p className="opacity-30">{formData.descricao?.length}/255</p>
           </section>
 
-          {/* Campos numéricos */}
+          {/* Seção 5 - Carcteristicas internas*/}
           <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 gap-4">
             {[
               { label: "Quartos", name: "quartos", value: formData.quartos },
