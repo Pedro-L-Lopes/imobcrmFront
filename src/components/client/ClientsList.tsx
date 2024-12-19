@@ -41,12 +41,12 @@ function ClientList() {
   );
 
   return (
-    <div>
-      <header className="text-3xl font-bold text-gray-800 ml-4 mt-8">
+    <div className="w-full min-h-screen flex flex-col justify-start mt-4">
+      <header className="text-3xl font-bold text-gray-800 ml-4 mt-2">
         Listagem de Clientes
       </header>
 
-      <div className="p-8 bg-white rounded-lg shadow-md mt-6 space-y-6">
+      <div className="p-8 bg-white rounded-lg shadow-md mt-2 space-y-6">
         <div className="flex items-center justify-between">
           <Search onSearch={handleSearch} />
           <Link to="/novo-cliente">

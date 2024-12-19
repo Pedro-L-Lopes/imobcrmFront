@@ -260,9 +260,10 @@ const MainDetailsForm: React.FC<MainDetailsProps> = ({
                         type="date"
                         name="dataAvaliacao"
                         value={
-                          formData.dataAvaliacao &&
                           formData.dataAvaliacao instanceof Date
                             ? formData.dataAvaliacao.toISOString().split("T")[0]
+                            : typeof formData.dataAvaliacao === "string"
+                            ? formData.dataAvaliacao
                             : ""
                         }
                         onChange={handleChange}
@@ -323,11 +324,14 @@ const MainDetailsForm: React.FC<MainDetailsProps> = ({
                       </label>
                       <input
                         type="date"
-                        name="dataAvaliacao"
+                        name="dataAutorizacao"
                         value={
-                          formData.dataAvaliacao &&
-                          formData.dataAvaliacao instanceof Date
-                            ? formData.dataAvaliacao.toISOString().split("T")[0]
+                          formData.dataAutorizacao instanceof Date
+                            ? formData.dataAutorizacao
+                                .toISOString()
+                                .split("T")[0]
+                            : typeof formData.dataAutorizacao === "string"
+                            ? formData.dataAutorizacao
                             : ""
                         }
                         onChange={handleChange}

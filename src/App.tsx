@@ -9,24 +9,21 @@ import Sidebar from "./components/Sidebar";
 
 function App() {
   return (
-    <>
-      <div className="flex">
-        <BrowserRouter>
-          <Sidebar />
+    <div className="flex min-h-screen">
+      <BrowserRouter>
+        <Sidebar />
+        <div className="flex-1 flex justify-center items-center p-4">
           <Routes>
             <Route path="/" element={<Home />} />
-
             <Route path="/clientes" element={<Client />} />
             <Route path="/novo-cliente" element={<InsertClient />} />
-
             <Route path="/localizacoes" element={<Location />} />
-
             <Route path="/imoveis" element={<Property />} />
             <Route path="/novo-imovel" element={<InsertProperty />} />
           </Routes>
-        </BrowserRouter>
-      </div>
-    </>
+        </div>
+      </BrowserRouter>
+    </div>
   );
 }
 

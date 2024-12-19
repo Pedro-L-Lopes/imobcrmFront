@@ -66,6 +66,9 @@ const InsertProperty: React.FC = () => {
     localizacaoId: 0,
   });
 
+  console.log("AV " + formData.dataAvaliacao);
+  console.log("AT " + formData.dataAutorizacao);
+
   // Validação de campos obrigatórios
   const validateStep = () => {
     const validations: Record<number, boolean> = {
@@ -98,8 +101,6 @@ const InsertProperty: React.FC = () => {
   const handlePrev = () => {
     setCurrentStep((prev) => prev - 1);
   };
-
-  console.log(formData.valor);
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -135,39 +136,38 @@ const InsertProperty: React.FC = () => {
     }));
   };
 
-  console.log(message);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-      dispatch(insertProperty(formData));
-
-    if (success) {
-      navigate("/imoveis");
+    if (formData.proprietarioId) {
+      try {
+        await dispatch(insertProperty(formData)).unwrap();
+        setFormData({
+          proprietarioId: "",
+          rua: "",
+          numero: "",
+          finalidade: "",
+          tipoImovel: "",
+          valor: 0,
+          quartos: 0,
+          banheiros: 0,
+          garagem: 0,
+          area: 0,
+          observacoes: "",
+          descricao: "",
+          localizacaoId: 0,
+        });
+        navigate("/imoveis");
+      } catch (error) {
+        console.error("Erro ao inserir o imóvel:", error);
+      }
     }
-
-    // if (success) {
-    //   alert("Imóvel cadastrado com sucesso!");
-    //   setFormData({
-    //     proprietarioId: "",
-    //     rua: "",
-    //     numero: "",
-    //     finalidade: "",
-    //     tipoImovel: "",
-    //     valor: 0,
-    //     quartos: 0,
-    //     banheiros: 0,
-    //     garagem: 0,
-    //     area: 0,
-    //     observacoes: "",
-    //     descricao: "",
-    //     localizacaoId: 0,
-    //   });
-    //   setCurrentStep(0);
-    // }
   };
+
+  console.log(message);
+  console.log(success);
   return (
-    <div className="max-w-full mx-auto mt-3 p-6 rounded shadow">
+    <div className="w-full min-h-screen flex flex-col justify-start mt-4 p-4">
       {showError && (
         <Message
           text="Por favor, preencha todos os campos obrigatórios."
@@ -175,7 +175,15 @@ const InsertProperty: React.FC = () => {
         />
       )}
       <Message type="error" text={error} />
-      <InsertHeader url="/imoveis" title="" />
+      <InsertHeader
+        title="Inserir Imóvel"
+        paths={[
+          { name: "Dashboard", url: "/dashboard" },
+          { name: "Imóveis", url: "/imoveis" },
+          { name: "Inserir Imóvel", url: "/novo-imovel" },
+        ]}
+      />
+
       <h1 className="text-2xl text-center font-bold mb-6">
         CADASTRO DE IMÓVEL
       </h1>

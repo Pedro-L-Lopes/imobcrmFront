@@ -26,7 +26,7 @@ function LocationList({
   }
 
   return locations && locations.length > 0 ? (
-    <table className="min-w-full table-fixed border-collapse border border-gray-300 text-sm text-gray-700 rounded-lg overflow-hidden">
+    <table className="w-full border-gray-300 text-sm text-gray-700 rounded-lg overflow-hidden border">
       <thead className="bg-blue-600 text-white">
         <tr>
           <th

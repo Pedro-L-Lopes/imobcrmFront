@@ -43,8 +43,7 @@ const ClientForm: React.FC<ClientFormProps> = ({
   };
 
   return (
-    <form onSubmit={onSubmit} className="space-y-6">
-      {/* Primeira linha */}
+    <form onSubmit={onSubmit} className="space-y-6 rounded-sm p-2">
       <div className="grid md:grid-cols-3 gap-4">
         <div>
           <label className="block font-medium mb-1">

@@ -1,25 +1,24 @@
-import { MdArrowBack } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 type InsertHeaderProps = {
-  url: string;
+  paths: { name: string; url: string }[];
   title: string;
 };
 
-const InsertHeader = ({ url, title }: InsertHeaderProps) => {
+const InsertHeader = ({ paths, title }: InsertHeaderProps) => {
   return (
-    <div>
-      {/* Botão de voltar */}
-      <Link
-        to={url}
-        className="flex items-center justify-center gap-2 w-10 h-10 mb-5 bg-gray-200 rounded-full hover:bg-gray-300 transition-shadow shadow-sm"
-        title="Voltar"
-      >
-        <MdArrowBack size={24} />
-      </Link>
-
+    <div className="mb-8">
       {/* Título */}
       <h2 className="text-lg font-bold mb-6">{title}</h2>
+
+      <div className="text-sm flex gap-1 ml-4 -mt-5 opacity-80">
+        {paths.map((path, index) => (
+          <div key={index} className="flex items-center gap-1">
+            <Link to={path.url}>{path.name}</Link>
+            {index < paths.length - 1 && <p>{">"}</p>}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

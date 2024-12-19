@@ -37,24 +37,25 @@ function Location() {
   }, [dispatch]);
 
   return (
-    <div className="p-6 bg-gray-50 rounded-lg shadow-lg">
-      <header className="text-2xl font-medium mb-6">
+    <div className="w-full min-h-screen flex flex-col justify-start mt-8">
+      <header className="text-3xl font-bold text-gray-800 ml-4 mt-2">
         Listagem de Localizações
       </header>
 
-      <SearchLocation
-        term1={term1}
-        setTerm1={setTerm1}
-        term2={term2}
-        setTerm2={setTerm2}
-      />
-
-      <LocationList
-        locations={locations}
-        loading={loading}
-        error={error}
-        message={message}
-      />
+      <div className="mt-8">
+        <SearchLocation
+          term1={term1}
+          setTerm1={setTerm1}
+          term2={term2}
+          setTerm2={setTerm2}
+        />
+        <LocationList
+          locations={locations}
+          loading={loading}
+          error={error}
+          message={message}
+        />
+      </div>
     </div>
   );
 }

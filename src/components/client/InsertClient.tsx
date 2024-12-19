@@ -56,11 +56,18 @@ const InsertClient = () => {
   console.log(error);
 
   return (
-    <div className="p-6 bg-gray-50 rounded-lg shadow-lg">
+    <div className="w-full min-h-screen flex flex-col justify-start mt-4 p-4">
       {/* Mensagem de erro ou sucesso */}
       <Message text={message} type={error ? "error" : "success"} />
 
-      <InsertHeader url="/clientes" title="Inserir Cliente" />
+      <InsertHeader
+        title="Inserir Cliente"
+        paths={[
+          { name: "Dashboard", url: "/dashboard" },
+          { name: "Clientes", url: "/clientes" },
+          { name: "Inserir Cliente", url: "/novo-cliente" },
+        ]}
+      />
 
       {/* Formulário */}
       <ClientForm

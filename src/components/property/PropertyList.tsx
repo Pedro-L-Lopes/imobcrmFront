@@ -60,8 +60,10 @@ function PropertyList() {
   };
 
   return (
-    <div className="p-6 bg-gray-50 rounded-lg shadow-lg">
-      <header className="text-2xl font-medium mb-4">Lista de Imóveis</header>
+    <div className="w-full min-h-screen flex flex-col justify-start mt-4">
+      <header className="text-3xl font-bold text-gray-800 ml-4 mt-2">
+        Listagem de Imóveis
+      </header>
 
       <div className="p-10">
         <div className="flex flex-wrap gap-4 mb-6">
