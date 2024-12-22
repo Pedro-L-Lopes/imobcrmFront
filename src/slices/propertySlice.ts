@@ -25,16 +25,16 @@ const initialState: PropertyState = {
 };
 
 interface GetPropertysParams {
-  currentPage: number;
-  purpose: string;
-  typeProperty: string;
-  situation: string;
-  avaliation: string;
-  withPlate: string;
-  autorizationType: string;
-  orderBy: string;
-  sortDirection: string;
-  searchTerm: string;
+  currentPage?: number;
+  purpose?: string;
+  typeProperty?: string;
+  situation?: string;
+  avaliation?: string;
+  withPlate?: string;
+  autorizationType?: string;
+  orderBy?: string;
+  sortDirection?: string;
+  searchTerm?: string;
 }
 
 export const insertProperty = createAsyncThunk(
@@ -75,16 +75,41 @@ export const getPropertys = createAsyncThunk(
   ) => {
     try {
       const response = await propertyService.getPropertys(
-        currentPage,
-        purpose,
-        typeProperty,
-        situation,
-        avaliation,
-        withPlate,
-        autorizationType,
-        orderBy,
-        sortDirection,
-        searchTerm
+        currentPage!,
+        purpose!,
+        typeProperty!,
+        situation!,
+        avaliation!,
+        withPlate!,
+        autorizationType!,
+        orderBy!,
+        sortDirection!,
+        searchTerm!
+      );
+
+      if (response.error) {
+        return thunkAPI.rejectWithValue(response.message);
+      }
+
+      return response;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message || "Erro desconhecido.");
+    }
+  }
+);
+
+export const searchproperties = createAsyncThunk(
+  "property/search",
+  async (
+    { purpose, orderBy, sortDirection, searchTerm }: GetPropertysParams,
+    thunkAPI
+  ) => {
+    try {
+      const response = await propertyService.searchproperties(
+        purpose!,
+        orderBy!,
+        sortDirection!,
+        searchTerm!
       );
 
       if (response.error) {
@@ -140,6 +165,21 @@ export const propertySlice = createSlice({
         state.currentPage = action.payload.currentPage || 1;
       })
       .addCase(getPropertys.rejected, (state, action) => {
+        state.loading = false;
+        state.error = true;
+        state.message = action.payload as string;
+      })
+      .addCase(searchproperties.pending, (state) => {
+        state.loading = true;
+        state.error = false;
+        state.message = null;
+      })
+      .addCase(searchproperties.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.propertys = action.payload;
+      })
+      .addCase(searchproperties.rejected, (state, action) => {
         state.loading = false;
         state.error = true;
         state.message = action.payload as string;

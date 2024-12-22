@@ -60,9 +60,46 @@ const getPropertys = async (
   }
 };
 
+// Pesquisa de imóveis
+const searchproperties = async (
+  purpose: string,
+  orderBy: string,
+  sortDirection: string,
+  searchTerm: string
+) => {
+  const config = requestConfig("GET", null);
+
+  try {
+    const res = await fetch(
+      api +
+        `imovel/search?term=${searchTerm}&finalidade=${purpose}&OrderBy=${orderBy}&SortDirection=${sortDirection}`,
+      config
+    );
+
+    // Verifica se a resposta foi bem-sucedida
+    if (!res.ok) {
+      const errorData = await res.json();
+      throw {
+        status: res.status,
+        message: errorData?.message || "Erro na API.",
+      };
+    }
+
+    const data = await res.json();
+    return data;
+  } catch (error: any) {
+    return {
+      error: true,
+      status: error?.status || 500,
+      message: error?.message || "Erro desconhecido.",
+    };
+  }
+};
+
 const propertyService = {
   insertProperty,
   getPropertys,
+  searchproperties,
 };
 
 export default propertyService;

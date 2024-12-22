@@ -33,9 +33,9 @@ function PropertyList() {
   });
 
   const [filters, setFilters] = useState({
-    purpose: "",
+    purpose: "venda",
     typeProperty: "",
-    situation: "",
+    situation: "Disponível",
     avaliation: "",
     withPlate: "",
     autorizationType: "",
@@ -66,15 +66,16 @@ function PropertyList() {
         Listagem de Imóveis
       </header>
 
-      <div className="p-10">
-        <div className="flex flex-wrap gap-4 mb-6">
+      <div className="p-10 bg-gray-50 m-2 rounded-sm">
+        <div className="flex-col flex-wrap gap-4 mb-6 border p-2 shadow-sm rounded-md">
+          <h1 className="text-xl font-semibold mb-2">Filtros</h1>
           {filterOptions.map((filter) => (
             <select
               key={filter.name}
               name={filter.name}
               value={filters[filter.name as keyof typeof filters]}
               onChange={handleFilterChange}
-              className="border rounded-lg px-4 py-2"
+              className="border rounded-lg px-4 py-2 m-1"
             >
               <option value="">{filter.label}</option>
               {filter.options.map((option) => (

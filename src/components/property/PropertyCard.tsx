@@ -61,9 +61,9 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
         <div className="flex flex-wrap gap-2">
           <span
             className={`px-3 py-1 rounded text-white font-bold ${
-              property.situacao?.toLowerCase() === "disponivel"
+              property.situacao?.toLowerCase() === "Disponível"
                 ? "bg-green-600"
-                : property.situacao?.toLowerCase() === "moderacao"
+                : property.situacao?.toLowerCase() === "Moderação"
                 ? "bg-yellow-600"
                 : property.situacao?.toLowerCase() === "alugado"
                 ? "bg-blue-600"

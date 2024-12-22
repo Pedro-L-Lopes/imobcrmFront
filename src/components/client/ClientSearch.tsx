@@ -1,10 +1,9 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { getClientsByNameAndDocument } from "../../slices/clientSlice";
 import { ClientType } from "../../types/client";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import Tag from "../utils/Tag";
-import * as Dialog from "@radix-ui/react-dialog";
 import InsertClientModal from "./InsertClientModal";
 
 type ClientSearchProps = {
@@ -86,7 +85,7 @@ const ClientSearch = ({
       ) : (
         <input
           type="text"
-          placeholder="Pesquise por Nome ou CPF/CNPJ"
+          placeholder="Pesquise por Nome, CPF/CNPJ ou Código"
           value={searchTerm}
           onChange={(e) => handleSearch(e.target.value)}
           onFocus={() => searchTerm.length >= 3 && setDropdownOpen(true)}

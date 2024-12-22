@@ -10,11 +10,11 @@ interface AdditionalDetailsProps {
   onSelectOwner: (clientId: string) => void;
 }
 
-const AdditionalDetailsForm: React.FC<AdditionalDetailsProps> = ({
+const AdditionalDetailsForm = ({
   formData,
   onSelectOwner,
   handleChange,
-}) => (
+}: AdditionalDetailsProps) => (
   <div>
     <div>
       <label htmlFor="proprietarioId" className="block font-semibold mb-1">

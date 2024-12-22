@@ -11,11 +11,11 @@ interface AddressOwnerProps {
   onSelectLocation: (locationId: number) => void;
 }
 
-const AddressOwnerForm: React.FC<AddressOwnerProps> = ({
+const AddressOwnerForm = ({
   formData,
   handleChange,
   onSelectLocation,
-}) => (
+}: AddressOwnerProps) => (
   <main className="flex items-center justify-center h-28 border p-2 rounded-md">
     <section className="flex items-center gap-4">
       <div>

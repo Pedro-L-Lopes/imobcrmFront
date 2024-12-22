@@ -10,6 +10,8 @@ import InsertClient from "./components/client/InsertClient";
 import Property from "./pages/Property";
 import InsertProperty from "./components/property/InsertProperty";
 import Location from "./pages/Location";
+import Visit from "./pages/Visit";
+import InsertVisit from "./components/visit/InsertVisit";
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -25,11 +27,17 @@ function App() {
         >
           <Routes>
             <Route path="/" element={<Home />} />
+
             <Route path="/clientes" element={<Client />} />
             <Route path="/novo-cliente" element={<InsertClient />} />
+
             <Route path="/localizacoes" element={<Location />} />
+
             <Route path="/imoveis" element={<Property />} />
             <Route path="/novo-imovel" element={<InsertProperty />} />
+
+            <Route path="/visitas" element={<Visit />} />
+            <Route path="/nova-visita" element={<InsertVisit />} />
           </Routes>
         </div>
       </BrowserRouter>
