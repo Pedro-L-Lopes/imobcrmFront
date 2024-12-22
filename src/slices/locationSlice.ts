@@ -4,6 +4,7 @@ import { LocationType } from "../types/location";
 
 type LocationState = {
   locations: LocationType[];
+  location: LocationType;
   loading: boolean;
   error: boolean;
   success: boolean;
@@ -12,6 +13,10 @@ type LocationState = {
 
 const initialState: LocationState = {
   locations: [],
+  location: {
+    cidade: "",
+    estado: "",
+  },
   loading: false,
   error: false,
   success: false,
@@ -22,6 +27,25 @@ interface GetLocationsParams {
   searchTerm1: string;
   searchTerm2: string;
 }
+
+export const insertLocation = createAsyncThunk(
+  "location/insert",
+  async (data: LocationType, thunkAPI) => {
+    try {
+      const res = await locationService.insertLocation(data);
+
+      if (res.status === "Error") {
+        return thunkAPI.rejectWithValue(
+          res.message || "Erro ao inserir localização"
+        );
+      }
+
+      return res.message || "Localização inserida com sucesso";
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message || "Erro inesperado");
+    }
+  }
+);
 
 export const getLocationsByOneTerm = createAsyncThunk(
   "client/getLocationsByOneTerm",
@@ -63,10 +87,30 @@ export const locationSlice = createSlice({
   reducers: {
     reset: (state) => {
       state.message = null;
+      state.success = false;
+      state.error = false;
+      state.loading = false;
     },
   },
   extraReducers: (builder) => {
     builder
+      .addCase(insertLocation.pending, (state) => {
+        state.loading = true;
+        state.error = false;
+        state.success = false;
+      })
+      .addCase(insertLocation.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = false;
+        state.success = true;
+        state.message = "Localização adicionada";
+      })
+      .addCase(insertLocation.rejected, (state, action) => {
+        state.loading = false;
+        state.success = false;
+        state.error = true;
+        state.message = action.payload as string;
+      })
       .addCase(getLocationsByOneTerm.pending, (state) => {
         state.loading = true;
         state.error = false;

@@ -20,7 +20,10 @@ const AdditionalDetailsForm: React.FC<AdditionalDetailsProps> = ({
       <label htmlFor="proprietarioId" className="block font-semibold mb-1">
         Proprietário
       </label>
-      <ClientSearch onClientSelect={onSelectOwner} />
+      <ClientSearch
+        onClientSelect={onSelectOwner}
+        selectedClientId={formData.proprietarioId}
+      />
     </div>
   </div>
 );

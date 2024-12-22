@@ -56,7 +56,10 @@ const AddressOwnerForm: React.FC<AddressOwnerProps> = ({
         />
       </div>
 
-      <LocationSearch onlocationSelect={onSelectLocation} />
+      <LocationSearch
+        onLocationSelect={onSelectLocation}
+        initialLocationId={formData.localizacaoId!}
+      />
     </section>
   </main>
 );

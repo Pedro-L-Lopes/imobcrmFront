@@ -11,6 +11,7 @@ import { ordinations, filterOptions } from "../../utils/propertyUtils";
 import PropertyCard from "./PropertyCard";
 import { Link } from "react-router-dom";
 import { AiOutlinePlus } from "react-icons/ai";
+import Button from "../utils/Button";
 
 function PropertyList() {
   const dispatch = useDispatch<AppDispatch>();
@@ -119,12 +120,11 @@ function PropertyList() {
               )}
             </button>
           </section>
-
-          <Link to="/novo-imovel">
-            <button className="flex items-center justify-center bg-blue-600 text-white px-4 py-2 font-semibold rounded-md shadow-md hover:bg-blue-500 transition">
-              <AiOutlinePlus size={20} className="mr-1" /> <p>Inserir Imóvel</p>
-            </button>
-          </Link>
+          <Button
+            icon={<AiOutlinePlus size={20} className="mr-1" />}
+            link="/novo-imovel"
+            title="Inserir Imóvel"
+          />
         </div>
 
         {error && <Message text={message} type="error" />}

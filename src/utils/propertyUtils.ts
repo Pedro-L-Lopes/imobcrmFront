@@ -58,13 +58,13 @@ export const filterOptions = [
     name: "situation",
     label: "Situação",
     options: [
-      { value: "disponivel", label: "Disponível" },
-      { value: "moderacao", label: "Moderação" },
+      { value: "Disponível", label: "Disponível" },
+      { value: "Moderação", label: "Moderação" },
       { value: "alugado", label: "Alugado" },
       { value: "vendido", label: "Vendido" },
-      { value: "alugado/Disponivel Venda", label: "Alugado/Disponível Venda" },
+      { value: "alugado/Disponível Venda", label: "Alugado/Disponível Venda" },
       { value: "em reforma", label: "Em Reforma" },
-      { value: "indisponivel", label: "Indisponível" },
+      { value: "indisponível", label: "Indisponível" },
     ],
   },
   {
@@ -87,9 +87,9 @@ export const filterOptions = [
     name: "autorizationType",
     label: "Autorização",
     options: [
-      { value: "com exclusividade", label: "Com Exclusividade" },
-      { value: "sem exclusividade", label: "Sem Exclusividade" },
-      { value: "sem autorizacao", label: "Sem Autorização" },
+      { value: "Com Exclusividade", label: "Com Exclusividade" },
+      { value: "Sem Exclusividade", label: "Sem Exclusividade" },
+      { value: "Sem Autorização", label: "Sem Autorização" },
     ],
   },
 ];

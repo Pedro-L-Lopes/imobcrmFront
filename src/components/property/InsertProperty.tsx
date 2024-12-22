@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import StepProgress from "./StepProgress";
 import AddressOwnerForm from "./forms/AddressOwnerForm";
 import MainDetailsForm from "./forms/MainDetailsForm";
@@ -9,7 +9,6 @@ import { insertProperty } from "../../slices/propertySlice";
 import { PropertyType } from "../../types/property";
 import { useSelector } from "react-redux";
 import InsertHeader from "../InsertHeader";
-import { area } from "motion/react-client";
 import Message from "../utils/Message";
 import { useNavigate } from "react-router-dom";
 
@@ -17,12 +16,11 @@ const InsertProperty: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const { success, error, message } = useSelector(
-    (state: any) => state.property
-  );
+  const { error } = useSelector((state: any) => state.property);
 
   const [showError, setShowError] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
+  const [isReadyToSubmit, setIsReadyToSubmit] = useState(false);
   const [formData, setFormData] = useState<PropertyType>({
     proprietarioId: "",
 
@@ -65,9 +63,6 @@ const InsertProperty: React.FC = () => {
 
     localizacaoId: 0,
   });
-
-  console.log("AV " + formData.dataAvaliacao);
-  console.log("AT " + formData.dataAutorizacao);
 
   // Validação de campos obrigatórios
   const validateStep = () => {
@@ -136,6 +131,16 @@ const InsertProperty: React.FC = () => {
     }));
   };
 
+  useEffect(() => {
+    if (currentStep == 3) {
+      setTimeout(() => {
+        setIsReadyToSubmit(true);
+      }, 500);
+    } else {
+      setIsReadyToSubmit(false);
+    }
+  }, [currentStep]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -164,8 +169,6 @@ const InsertProperty: React.FC = () => {
     }
   };
 
-  console.log(message);
-  console.log(success);
   return (
     <div className="w-full min-h-screen flex flex-col justify-start mt-4 p-4">
       {showError && (
@@ -238,12 +241,20 @@ const InsertProperty: React.FC = () => {
             >
               Avançar
             </button>
-          ) : (
+          ) : isReadyToSubmit ? (
             <button
               type="submit"
               className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition"
             >
               Finalizar Cadastro
+            </button>
+          ) : (
+            <button
+              type="submit"
+              disabled
+              className="bg-gray-500 text-white py-2 px-4 rounded"
+            >
+              Aguarde...
             </button>
           )}
         </div>

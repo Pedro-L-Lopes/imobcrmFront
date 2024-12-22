@@ -1,6 +1,22 @@
 import { api, requestConfig } from "../lib/config";
 import { LocationType } from "../types/location";
 
+// Inserir localização
+const insertLocation = async (location: LocationType) => {
+  const config = requestConfig("POST", location);
+
+  try {
+    const res = await fetch(api + `localizacao`, config);
+    if (!res.ok) {
+      const error = await res.json();
+      throw new Error(error.message || "Erro ao processar a requisição.");
+    }
+    return res.json();
+  } catch (error: any) {
+    throw new Error(error.message || "Erro inesperado");
+  }
+};
+
 // Buscar localizações com uma termo
 const getLocationsByOneTerm = async (searchTerm: string) => {
   const config = requestConfig("GET", null);
@@ -32,6 +48,7 @@ const getLocations = async (searchTerm1: string, searchTerm2: string) => {
 };
 
 const locationService = {
+  insertLocation,
   getLocations,
   getLocationsByOneTerm,
 };

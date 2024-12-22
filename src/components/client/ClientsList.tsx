@@ -9,6 +9,8 @@ import Search from "../Search";
 import Message from "../utils/Message";
 import ClientsTable from "./ClientsTable";
 import Pagination from "../utils/Pagination";
+import Button from "../utils/Button";
+import { AiOutlinePlus } from "react-icons/ai";
 
 function ClientList() {
   const dispatch = useDispatch<AppDispatch>();
@@ -49,11 +51,11 @@ function ClientList() {
       <div className="p-8 bg-white rounded-lg shadow-md mt-2 space-y-6">
         <div className="flex items-center justify-between">
           <Search onSearch={handleSearch} />
-          <Link to="/novo-cliente">
-            <button className="bg-blue-600 text-white px-4 py-2 font-semibold rounded-md shadow-md hover:bg-blue-500 transition">
-              Inserir Cliente
-            </button>
-          </Link>
+          <Button
+            icon={<AiOutlinePlus size={20} className="mr-1" />}
+            link="/novo-cliente"
+            title="Inserir Cliente"
+          />
         </div>
 
         {error && <Message text={message} type="error" />}

@@ -1,18 +1,28 @@
+// Hooks
+import { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+// Pages and components
+import Sidebar from "./components/Sidebar";
+import Home from "./pages/Home";
 import Client from "./pages/Client";
 import InsertClient from "./components/client/InsertClient";
-import Location from "./pages/Location";
 import Property from "./pages/Property";
 import InsertProperty from "./components/property/InsertProperty";
-import Home from "./pages/Home";
-import Sidebar from "./components/Sidebar";
+import Location from "./pages/Location";
 
 function App() {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   return (
     <div className="flex min-h-screen">
       <BrowserRouter>
-        <Sidebar />
-        <div className="flex-1 flex justify-center items-center p-4">
+        <Sidebar open={sidebarOpen} setOpen={setSidebarOpen} />
+
+        <div
+          className={`flex-1 flex justify-center items-center p-4 duration-500 ${
+            sidebarOpen ? "ml-48" : "ml-16"
+          }`}
+        >
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/clientes" element={<Client />} />
