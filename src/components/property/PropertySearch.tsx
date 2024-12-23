@@ -143,7 +143,7 @@ const PropertySearch = ({
       ) : (
         <section className="flex items-center gap-4 border rounded-md">
           <div className="p-2 borde-r border-red-400">
-            <label className="font-semibold">Finalidade do imóvel</label>
+            <label className="font-semibold">Finalidade</label>
             {/* Seleção de Finalidade */}
             <div className="flex items-center justify-center gap-4 mb-2">
               <select
@@ -162,7 +162,7 @@ const PropertySearch = ({
           </div>
 
           <div className="">
-            <label className="font-semibold mb-1">Pesquise o imóvel</label>
+            <label className="font-semibold mb-1 ">Pesquise o imóvel</label>
             <input
               type="text"
               value={searchTerm}

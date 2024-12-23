@@ -29,7 +29,7 @@ const getVisits = async (
   try {
     const res = await fetch(
       api +
-        `visita?PageNumber=${page}&PageSize=20&OrderBy=${orderBy}&SortDirection=${sortDirection}`,
+        `visita?PageNumber=${page}&PageSize=6&OrderBy=${orderBy}&SortDirection=${sortDirection}`,
       config
     );
 

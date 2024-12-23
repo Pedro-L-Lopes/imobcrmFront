@@ -1,4 +1,5 @@
 import { visitType } from "../../types/visit";
+import dayjs from "dayjs";
 
 interface VisitsCardsProps {
   visits: visitType[];
@@ -44,21 +45,12 @@ const VisitsCards = ({ visits, handleSort }: VisitsCardsProps) => {
               <strong>Finalidade:</strong> {visita.finalidadeVisita}
             </p>
             <p>
-              <strong>Valor do Imóvel:</strong>{" "}
-              {visita.valorImovel!.toLocaleString("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              })}
-            </p>
-            <p>
               <strong>Hora:</strong>{" "}
               {visita.dataHora
-                ? new Date(visita.dataHora).toLocaleTimeString("pt-BR", {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })
+                ? dayjs(visita.dataHora).subtract(3, "hour").format("HH:mm")
                 : "-"}
             </p>
+
             <p>
               <strong>Data:</strong>{" "}
               {visita.dataHora

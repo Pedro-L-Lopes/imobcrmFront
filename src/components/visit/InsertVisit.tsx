@@ -20,7 +20,7 @@ const InsertVisit = () => {
   const [situacao, setSituacao] = useState("");
   const [clienteId, setClienteId] = useState("");
   const [imovelId, setImovelId] = useState("");
-  const [dataHora, setDataHora] = useState<Date>();
+  const [dataHora, setDataHora] = useState<any>();
   const [observacao, setObservacao] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {

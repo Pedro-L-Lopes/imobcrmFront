@@ -51,13 +51,7 @@ function VisitList() {
     [setPage]
   );
 
-  const ordinations = [
-    { name: "ultimaedicao", label: "Última Edição" },
-    { name: "preco", label: "Preço" },
-    { name: "dataHora", label: "Data e hora" },
-
-    { name: "tipo", label: "Tipo de Imóvel" },
-  ];
+  const ordinations = [{ name: "dataHora", label: "Data e hora" }];
 
   return (
     <div className="w-full min-h-screen flex flex-col justify-start mt-4">
@@ -66,9 +60,9 @@ function VisitList() {
       </header>
 
       <div className="p-8 bg-white rounded-lg shadow-md mt-2 space-y-6">
-        <div className="flex items-center justify-between">
+        {/* <div className="flex items-center justify-between">
           <Search onSearch={handleSearch} />
-        </div>
+        </div> */}
 
         <div className="flex items-center justify-between gap-4 mb-4">
           <section className="flex items-center gap-4 flex-wrap">
