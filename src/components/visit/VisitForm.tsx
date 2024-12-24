@@ -30,7 +30,7 @@ const VisitForm = ({
   return (
     <form
       onSubmit={onSubmit}
-      className="space-y-6 rounded-xl p-6 bg-white shadow-lg"
+      className="space-y-6 rounded-xl p-6 bg-gray-100 shadow-lg"
     >
       {/* Linha 1: Situação */}
       <div className="grid md:grid-cols-3 gap-6">
@@ -111,7 +111,7 @@ const VisitForm = ({
           type="submit"
           className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-200 ease-in-out"
         >
-          Salvar Visita
+          Agendar Visita
         </button>
       </div>
     </form>

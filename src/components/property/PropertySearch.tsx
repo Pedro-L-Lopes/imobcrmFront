@@ -1,13 +1,10 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { searchproperties } from "../../slices/propertySlice";
-import Tag from "../utils/Tag";
 import { PropertyType } from "../../types/property";
 import { Link } from "react-router-dom";
 import { CiHome, CiLocationOn, CiMoneyBill, CiUser } from "react-icons/ci";
-import { PiHouseLine } from "react-icons/pi";
-import { FaBuilding } from "react-icons/fa";
 
 type PropertySearchProps = {
   onPropertySelect: (propertyId: string, purpose: string) => void;
@@ -55,6 +52,7 @@ const PropertySearch = ({
     dispatch(
       searchproperties({
         purpose,
+        situation: "Disponível",
         orderBy: "codigo",
         sortDirection: "asc",
         searchTerm: term,
@@ -149,7 +147,7 @@ const PropertySearch = ({
               <select
                 value={purpose}
                 onChange={(e) => handlePurposeChange(e.target.value)}
-                className="text-white p-2 border rounded bg-blue-500"
+                className="text-white p-2 border rounded bg-blue-500 hover:bg-blue-600"
               >
                 <option value="venda" className="bg-blue-500">
                   Venda

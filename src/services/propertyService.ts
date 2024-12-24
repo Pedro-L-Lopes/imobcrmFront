@@ -63,6 +63,7 @@ const getPropertys = async (
 // Pesquisa de imóveis
 const searchproperties = async (
   purpose: string,
+  situation: string,
   orderBy: string,
   sortDirection: string,
   searchTerm: string
@@ -72,7 +73,7 @@ const searchproperties = async (
   try {
     const res = await fetch(
       api +
-        `imovel/search?term=${searchTerm}&finalidade=${purpose}&OrderBy=${orderBy}&SortDirection=${sortDirection}`,
+        `imovel/search?term=${searchTerm}&finalidade=${purpose}&situacao=${situation}&OrderBy=${orderBy}&SortDirection=${sortDirection}`,
       config
     );
 

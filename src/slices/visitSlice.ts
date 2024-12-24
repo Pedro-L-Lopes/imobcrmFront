@@ -9,6 +9,7 @@ type VisitState = {
   success: boolean;
   message: string | null;
   totalPages: number;
+  totalCount?: number;
   currentPage: number;
 };
 
@@ -19,13 +20,18 @@ const initialState: VisitState = {
   success: false,
   message: null,
   totalPages: 1,
+  totalCount: 0,
   currentPage: 1,
 };
 
 interface GetvisitsParams {
   currentPage: number;
+  totalCount: number;
   orderBy: string;
   sortDirection: string;
+  situacao: string;
+  dataInicio: string;
+  dataFim: string;
   searchTerm: string;
 }
 
@@ -51,7 +57,15 @@ export const insertVisit = createAsyncThunk(
 export const getVisits = createAsyncThunk(
   "visit/get",
   async (
-    { currentPage, orderBy, sortDirection, searchTerm }: GetvisitsParams,
+    {
+      currentPage,
+      orderBy,
+      sortDirection,
+      situacao,
+      dataInicio,
+      dataFim,
+      searchTerm,
+    }: GetvisitsParams,
     thunkAPI
   ) => {
     try {
@@ -59,6 +73,9 @@ export const getVisits = createAsyncThunk(
         currentPage,
         orderBy,
         sortDirection,
+        situacao,
+        dataInicio,
+        dataFim,
         searchTerm
       );
 
@@ -113,6 +130,7 @@ export const visitSlice = createSlice({
         state.visits = action.payload.items;
         state.totalPages = action.payload.totalPages;
         state.currentPage = action.payload.currentPage;
+        state.totalCount = action.payload.totalCount;
       })
       .addCase(getVisits.rejected, (state, action) => {
         state.loading = false;

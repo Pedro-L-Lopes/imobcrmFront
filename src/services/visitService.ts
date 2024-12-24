@@ -22,6 +22,9 @@ const getVisits = async (
   page: number,
   orderBy: string,
   sortDirection: string,
+  situacao: string,
+  dataInicio: string,
+  dataFim: string,
   searchTerm: string
 ) => {
   const config = requestConfig("GET", null);
@@ -29,7 +32,7 @@ const getVisits = async (
   try {
     const res = await fetch(
       api +
-        `visita?PageNumber=${page}&PageSize=6&OrderBy=${orderBy}&SortDirection=${sortDirection}`,
+        `visita?PageNumber=${page}&PageSize=6&OrderBy=${orderBy}&SortDirection=${sortDirection}&situacao=${situacao}&dataInicio=${dataInicio}&dataFim=${dataFim}`,
       config
     );
 

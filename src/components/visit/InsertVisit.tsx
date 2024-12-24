@@ -46,7 +46,7 @@ const InsertVisit = () => {
 
   useEffect(() => {
     dispatch(reset());
-  }, [dispatch]);
+  }, [dispatch, error]);
 
   return (
     <div className="w-full min-h-screen flex flex-col justify-start mt-4 p-4">

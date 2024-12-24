@@ -17,5 +17,6 @@ export interface visitType {
   cidade?: string;
   estado?: string;
   finalidadeVisita?: string;
+  destincao?: string;
   valorImovel?: number;
 }

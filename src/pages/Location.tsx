@@ -52,16 +52,19 @@ function Location() {
   };
 
   return (
-    <div className="w-full min-h-screen flex flex-col justify-start mt-8">
+    <div className="w-full bg-gray-100 min-h-screen flex flex-col justify-start mt-8">
       <section className="flex items-center justify-between">
         <header className="flex items-center  gap-3 text-3xl font-bold text-gray-800 ml-4 mt-2">
           Listagem de Localizações
-          <div>
+          <div className="bg-gray-100">
             <Tooltip.Provider>
               <Tooltip.Root>
                 <Tooltip.Trigger asChild>
                   <button onClick={handleRefreshClick}>
-                    <TbRefresh size={30} className="bg-blue-500 text-white rounded-md"/>
+                    <TbRefresh
+                      size={30}
+                      className="bg-blue-500 text-white rounded-md"
+                    />
                   </button>
                 </Tooltip.Trigger>
                 <Tooltip.Portal>

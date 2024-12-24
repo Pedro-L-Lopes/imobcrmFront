@@ -17,6 +17,11 @@ function ClientList() {
   const totalPages = useSelector(
     (state: RootState) => state.client.totalPages || 1
   );
+
+  const totalCount = useSelector(
+    (state: RootState) => state.client.totalCount || 0
+  );
+
   const { currentPage, handleNextPage, handlePreviousPage, setPage } =
     usePagination(totalPages);
   const { clients, error, loading, message } = useSelector(
@@ -48,7 +53,7 @@ function ClientList() {
         Listagem de Clientes
       </header>
 
-      <div className="p-8 bg-white rounded-lg shadow-md mt-2 space-y-6">
+      <div className="p-8 bg-gray-100 rounded-lg shadow-md mt-2 space-y-6">
         <div className="flex items-center justify-between">
           <Search onSearch={handleSearch} />
           <Button
@@ -68,6 +73,7 @@ function ClientList() {
           <>
             <ClientsTable clients={clients} handleSort={handleSort} />
             <Pagination
+              totalCount={totalCount}
               currentPage={currentPage}
               totalPages={totalPages}
               onPreviousPage={handlePreviousPage}

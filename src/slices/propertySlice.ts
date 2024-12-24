@@ -101,12 +101,19 @@ export const getPropertys = createAsyncThunk(
 export const searchproperties = createAsyncThunk(
   "property/search",
   async (
-    { purpose, orderBy, sortDirection, searchTerm }: GetPropertysParams,
+    {
+      purpose,
+      situation,
+      orderBy,
+      sortDirection,
+      searchTerm,
+    }: GetPropertysParams,
     thunkAPI
   ) => {
     try {
       const response = await propertyService.searchproperties(
         purpose!,
+        situation!,
         orderBy!,
         sortDirection!,
         searchTerm!
@@ -163,6 +170,7 @@ export const propertySlice = createSlice({
         state.propertys = action.payload.items || [];
         state.totalPages = action.payload.totalPages || 1;
         state.currentPage = action.payload.currentPage || 1;
+        state.totalCount = action.payload.totalCount || 0;
       })
       .addCase(getPropertys.rejected, (state, action) => {
         state.loading = false;

@@ -1,9 +1,8 @@
-import InsertProperty from "../components/property/InsertProperty";
 import PropertyList from "../components/property/PropertyList";
 
 const Property = () => {
   return (
-    <div>
+    <div className="w-full flex items-center justify-center">
       <PropertyList />
     </div>
   );

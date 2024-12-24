@@ -3,6 +3,7 @@ import React from "react";
 interface PaginationProps {
   currentPage: number;
   totalPages: number;
+  totalCount: number;
   onPreviousPage: () => void;
   onNextPage: () => void;
 }
@@ -10,6 +11,7 @@ interface PaginationProps {
 const Pagination: React.FC<PaginationProps> = ({
   currentPage,
   totalPages,
+  totalCount,
   onPreviousPage,
   onNextPage,
 }) => {
@@ -24,9 +26,16 @@ const Pagination: React.FC<PaginationProps> = ({
       >
         Anterior
       </button>
-      <span className="text-lg">
-        Página {currentPage} de {totalPages}
-      </span>
+
+      <section className="flex flex-col items-center space-y-1">
+        <span className="text-lg">
+          Página {currentPage} de {totalPages}
+        </span>
+        <span className="text-sm opacity-85">
+          {totalCount} resultados no total
+        </span>
+      </section>
+
       <button
         onClick={onNextPage}
         disabled={currentPage === totalPages}

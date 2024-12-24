@@ -10,6 +10,7 @@ type ClientState = {
   message: string | null;
   totalPages: number;
   currentPage: number;
+  totalCount: number;
 };
 
 const initialState: ClientState = {
@@ -20,6 +21,7 @@ const initialState: ClientState = {
   message: null,
   totalPages: 1,
   currentPage: 1,
+  totalCount: 0,
 };
 
 interface GetClientsParams {
@@ -130,6 +132,7 @@ export const clientSlice = createSlice({
         state.clients = action.payload.items;
         state.totalPages = action.payload.totalPages;
         state.currentPage = action.payload.currentPage;
+        state.totalCount = action.payload.totalCount;
       })
       .addCase(getClients.rejected, (state, action) => {
         state.loading = false;

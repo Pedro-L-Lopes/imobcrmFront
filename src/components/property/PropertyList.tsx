@@ -20,6 +20,10 @@ function PropertyList() {
     (state: RootState) => state.property.totalPages || 1
   );
 
+  const totalCount = useSelector(
+    (state: RootState) => state.property.totalCount || 0
+  );
+
   const { propertys, error, loading, message } = useSelector(
     (state: RootState) => state.property
   );
@@ -66,7 +70,7 @@ function PropertyList() {
         Listagem de Imóveis
       </header>
 
-      <div className="p-10 bg-gray-50 m-2 rounded-sm">
+      <div className="p-10 bg-gray-100 w-full m-2 rounded-sm">
         <div className="flex-col flex-wrap gap-4 mb-6 border p-2 shadow-sm rounded-md">
           <h1 className="text-xl font-semibold mb-2">Filtros</h1>
           {filterOptions.map((filter) => (
@@ -148,6 +152,7 @@ function PropertyList() {
       </div>
 
       <Pagination
+        totalCount={totalCount}
         currentPage={currentPage}
         totalPages={totalPages}
         onPreviousPage={handlePreviousPage}

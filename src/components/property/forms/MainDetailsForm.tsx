@@ -106,12 +106,12 @@ const MainDetailsForm: React.FC<MainDetailsProps> = ({
                   onChange={handleChange}
                 >
                   <option value="">Selecione</option>
-                  <option value="residencial">Residencial</option>
-                  <option value="comercial">Comercial</option>
-                  <option value="residencial/residencial">
+                  <option value="Residencial">Residencial</option>
+                  <option value="Comercial">Comercial</option>
+                  <option value="Residencial/Comercial">
                     Residencial/Comercial
                   </option>
-                  <option value="rural">Rural</option>
+                  <option value="Rural">Rural</option>
                 </select>
               </div>
 

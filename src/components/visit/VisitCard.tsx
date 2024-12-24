@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { visitType } from "../../types/visit";
 import dayjs from "dayjs";
+import Report from "../utils/report/VisitRepostModal"; // Certifique-se de ajustar o caminho conforme necessário
 
 interface VisitsCardsProps {
   visits: visitType[];
@@ -7,6 +9,8 @@ interface VisitsCardsProps {
 }
 
 const VisitsCards = ({ visits, handleSort }: VisitsCardsProps) => {
+  const [selectedVisit, setSelectedVisit] = useState<visitType | null>(null);
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {visits.map((visita) => (
@@ -14,6 +18,25 @@ const VisitsCards = ({ visits, handleSort }: VisitsCardsProps) => {
           key={visita.visitaId}
           className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow"
         >
+          {/* Verificação se a data é hoje */}
+          {visita.dataHora && dayjs(visita.dataHora).isSame(dayjs(), "day") ? (
+            <p className="text-white text-center p-1 font-bold bg-green-500 rounded-sm">
+              VISITA HOJE!
+            </p>
+          ) : dayjs(visita.dataHora).isSame(dayjs().add(1, "day"), "day") ? (
+            <p className="text-white text-center p-1 font-bold bg-yellow-500 rounded-sm">
+              VISITA AMANHÃ!
+            </p>
+          ) : dayjs(visita.dataHora).isAfter(dayjs(), "day") ? (
+            <p className="text-white text-center p-1 font-bold bg-blue-500 rounded-sm">
+              VISITA OUTRO DIA
+            </p>
+          ) : (
+            <p className="text-white text-center p-1 font-bold bg-red-500 rounded-sm">
+              VISITA PASSADA!
+            </p>
+          )}
+
           <div className="mb-4">
             <section className="flex items-center justify-between">
               <h3 className="text-lg font-bold text-blue-600">
@@ -62,14 +85,35 @@ const VisitsCards = ({ visits, handleSort }: VisitsCardsProps) => {
               <strong>Observação:</strong> {visita.observacao || "-"}
             </p>
           </div>
-          <div className="mt-4 flex justify-end">
-            <select className="bg-gray-100 border border-gray-300 rounded-md px-2 py-1 text-gray-700 focus:outline-none hover:bg-gray-200 cursor-pointer">
+          <section className="flex justify-between items-center">
+            <div className="mt-4 flex flex-col space-y-2">
+              {/* Botão para abrir o relatório */}
+              <Report
+                procedimento={`${visita.finalidadeVisita}`}
+                nome={visita.clienteNome!}
+                cpf={visita.clienteDocumento!}
+                telefone={visita.clienteTelefone!}
+                destinacao={`${visita.destincao} (${visita.finalidadeVisita!})`}
+                endereco={`${visita.rua}, ${visita.bairro}, ${visita.cidade}-${visita.estado} CEP: ${visita.cep}`}
+                data={
+                  visita.dataHora
+                    ? new Date(visita.dataHora).toLocaleDateString("pt-BR")
+                    : "-"
+                }
+                horario={
+                  visita.dataHora
+                    ? dayjs(visita.dataHora).subtract(3, "hour").format("HH:mm")
+                    : "-"
+                }
+              />
+            </div>
+            <select className="bg-gray-100 px-3 py-1 rounded focus:outline-none hover:bg-gray-200 cursor-pointer">
               <option>Ações</option>
               <option>Detalhes</option>
               <option>Editar</option>
               <option>Excluir</option>
             </select>
-          </div>
+          </section>
         </div>
       ))}
     </div>
