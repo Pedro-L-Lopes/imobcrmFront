@@ -4,6 +4,7 @@ import { clientSlice as clientReducer } from "./slices/clientSlice";
 import { locationSlice as locationReducer } from "./slices/locationSlice";
 import { propertySlice as propertyReducer } from "./slices/propertySlice";
 import { visitSlice as visitReducer } from "./slices/visitSlice";
+import { rentalContractSlice as rentalContractReducer } from "./slices/rentalContractSlice";
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     location: locationReducer.reducer,
     property: propertyReducer.reducer,
     visit: visitReducer.reducer,
+    rentalContract: rentalContractReducer.reducer,
   },
 });
 

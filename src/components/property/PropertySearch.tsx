@@ -5,20 +5,33 @@ import { searchproperties } from "../../slices/propertySlice";
 import { PropertyType } from "../../types/property";
 import { Link } from "react-router-dom";
 import { CiHome, CiLocationOn, CiMoneyBill, CiUser } from "react-icons/ci";
+import { BsX } from "react-icons/bs";
+import { formatCurrency } from "../../utils/formats";
 
 type PropertySearchProps = {
-  onPropertySelect: (propertyId: string, purpose: string) => void;
+  onPropertySelect: (
+    propertyId: string,
+    ownerId: string,
+    purpose: string,
+    valorContrato: number,
+    valorCondominio: number
+  ) => void;
   selectedPropertyId?: string;
+  selectOwnerId?: string;
   initialPurpose?: string;
+  allowedPurposes?: string[];
 };
 
 const PropertySearch = ({
   onPropertySelect,
   selectedPropertyId,
   initialPurpose,
+  allowedPurposes = ["venda", "aluguel"],
 }: PropertySearchProps) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [purpose, setPurpose] = useState(initialPurpose || "venda");
+  const [purpose, setPurpose] = useState(
+    initialPurpose || allowedPurposes[0] || "venda"
+  );
   const [selectedProperty, setSelectedProperty] = useState<PropertyType | null>(
     null
   );
@@ -41,7 +54,7 @@ const PropertySearch = ({
   const handleSearch = (term: string) => {
     setSearchTerm(term);
     setSelectedProperty(null);
-    onPropertySelect("", purpose);
+    onPropertySelect("", "", purpose, 0, 0);
 
     if (term.length < 2) {
       setDropdownOpen(false);
@@ -64,19 +77,25 @@ const PropertySearch = ({
     setSelectedProperty(property);
     setSearchTerm("");
     setDropdownOpen(false);
-    onPropertySelect(property.imovelId!, purpose);
+    onPropertySelect(
+      property.imovelId!,
+      property.proprietarioId!,
+      purpose,
+      property.valor!,
+      property.valorCondominio!
+    );
   };
 
   const handleRemoveProperty = () => {
     setSelectedProperty(null);
     setSearchTerm("");
-    onPropertySelect("", purpose);
+    onPropertySelect("", "", purpose, 0, 0);
   };
 
   const handlePurposeChange = (purpose: string) => {
     setPurpose(purpose);
     setSelectedProperty(null);
-    onPropertySelect("", purpose);
+    onPropertySelect("", "", purpose, 0, 0);
 
     if (searchTerm.length >= 3) {
       dispatch(
@@ -111,63 +130,60 @@ const PropertySearch = ({
       {loading && <div className="absolute right-2 top-2">Carregando...</div>}
 
       {selectedProperty ? (
-        <div className="border p-4 rounded bg-white border-blue-500 mt-2">
-          <strong className="flex items-center gap-1 text-lg">
-            <CiHome />
-            {selectedProperty.codigo} - {selectedProperty.tipoImovel} -{" "}
-            {selectedProperty.destinacao}
-          </strong>
-          <p className="flex items-center gap-1 text-sm text-gray-500 mt-2">
-            <CiLocationOn /> {selectedProperty.rua}, {selectedProperty.numero} -{" "}
-            {selectedProperty.bairro}, {selectedProperty.cidade}-
-            {selectedProperty.estado} CEP: {selectedProperty.cep}
-          </p>
-          <p className="flex items-center gap-1 text-sm text-gray-500 mt-1">
-            <CiMoneyBill /> R${" "}
-            {selectedProperty.valor?.toLocaleString("pt-br", {
-              minimumFractionDigits: 2,
-            })}
-          </p>
-          <p className="flex items-center gap-1 text-sm text-gray-500 mt-2">
-            <CiUser /> {selectedProperty.proprietarioNome}
-          </p>
+        <div className="flex justify-between items-center border p-4 rounded bg-white mt-2">
+          <div>
+            {/* Informações do imóvel selecionado */}
+            <strong className="flex items-center gap-1 text-lg">
+              <CiHome />
+              Cód. {selectedProperty.codigo} | {selectedProperty.tipoImovel} |{" "}
+              {selectedProperty.destinacao}
+            </strong>
+            <p className="flex items-center gap-1 text-sm text-gray-500 mt-2">
+              <CiLocationOn /> {selectedProperty.rua}, {selectedProperty.numero}{" "}
+              - {selectedProperty.bairro}, {selectedProperty.cidade}-
+              {selectedProperty.estado} CEP: {selectedProperty.cep}
+            </p>
+            <p className="flex items-center gap-1 text-sm text-gray-500 mt-2">
+              <CiMoneyBill /> Valor {formatCurrency(selectedProperty.valor!)} |
+              Condomínio: {formatCurrency(selectedProperty.valorCondominio!)}
+            </p>
+          </div>
           <button
-            className="mt-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+            className="p-2 ml-2 bg-red-500 text-white rounded hover:bg-red-400 transition-all"
             onClick={handleRemoveProperty}
           >
-            Remover Imóvel
+            <BsX size={25} />
           </button>
         </div>
       ) : (
-        <section className="flex items-center gap-4 border rounded-md">
-          <div className="p-2 borde-r border-red-400">
-            <label className="font-semibold">Finalidade</label>
-            {/* Seleção de Finalidade */}
-            <div className="flex items-center justify-center gap-4 mb-2">
-              <select
-                value={purpose}
-                onChange={(e) => handlePurposeChange(e.target.value)}
-                className="text-white p-2 border rounded bg-blue-500 hover:bg-blue-600"
-              >
-                <option value="venda" className="bg-blue-500">
-                  Venda
-                </option>
-                <option value="aluguel" className="bg-blue-500">
-                  Aluguel
-                </option>
-              </select>
+        <section className="flex items-center gap-4 rounded-md">
+          {allowedPurposes.length > 1 && !initialPurpose && (
+            <div className="p-2 border-r">
+              <label className="font-semibold">Finalidade</label>
+              <div className="flex items-center justify-center gap-4 mb-2">
+                <select
+                  value={purpose}
+                  onChange={(e) => handlePurposeChange(e.target.value)}
+                  className="text-white border rounded bg-blue-500 hover:bg-blue-600"
+                >
+                  {allowedPurposes.map((p) => (
+                    <option key={p} value={p} className="bg-blue-500">
+                      {p.charAt(0).toUpperCase() + p.slice(1)}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
-          </div>
+          )}
 
-          <div className="">
-            <label className="font-semibold mb-1 ">Pesquise o imóvel</label>
+          <div className="w-full">
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => handleSearch(e.target.value)}
               onFocus={() => searchTerm.length >= 3 && setDropdownOpen(true)}
               placeholder="Pesquise por código, endereço ou proprietário"
-              className="w-full border p-2 rounded"
+              className="w-full border px-4 py-2 rounded"
             />
           </div>
         </section>

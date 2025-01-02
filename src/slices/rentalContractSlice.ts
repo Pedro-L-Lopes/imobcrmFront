@@ -1,9 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import clientService from "../services/clientService";
-import { ClientType } from "../types/client";
+import rentalContractService from "../services/rentalContractService";
+import { RentalContractType } from "../types/rentalContract";
 
-type ClientState = {
-  clients: ClientType[];
+type RentalContractState = {
+  rentalContracts: RentalContractType[];
+  rentalContract: RentalContractType;
   loading: boolean;
   error: boolean;
   success: boolean;
@@ -13,8 +14,9 @@ type ClientState = {
   totalCount: number;
 };
 
-const initialState: ClientState = {
-  clients: [],
+const initialState: RentalContractState = {
+  rentalContracts: [],
+  rentalContract: {},
   loading: false,
   error: false,
   success: false,
@@ -24,18 +26,21 @@ const initialState: ClientState = {
   totalCount: 0,
 };
 
-interface GetClientsParams {
+interface GetRentalContractsParams {
   currentPage: number;
   orderBy: string;
   sortDirection: string;
+  status: string;
+  startDate: string;
+  endDate: string;
   searchTerm: string;
 }
 
-export const insertClient = createAsyncThunk(
-  "client/insert",
-  async (data: ClientType, thunkAPI) => {
+export const insertRentalContract = createAsyncThunk(
+  "rentalContract/insert",
+  async (data: RentalContractType, thunkAPI) => {
     try {
-      const res = await clientService.insertClient(data);
+      const res = await rentalContractService.insertRentalContract(data);
 
       if (res.status === "Error") {
         return thunkAPI.rejectWithValue(
@@ -43,24 +48,35 @@ export const insertClient = createAsyncThunk(
         );
       }
 
-      return res.message || "Cliente inserido com sucesso";
+      return res.contratoId;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message || "Erro inesperado");
     }
   }
 );
- 
-export const getClients = createAsyncThunk(
-  "client/get",
+
+export const getRentalContracts = createAsyncThunk(
+  "rentalContracts/get",
   async (
-    { currentPage, orderBy, sortDirection, searchTerm }: GetClientsParams,
+    {
+      currentPage,
+      orderBy,
+      sortDirection,
+      status,
+      startDate,
+      endDate,
+      searchTerm,
+    }: GetRentalContractsParams,
     thunkAPI
   ) => {
     try {
-      const res = await clientService.getClients(
+      const res = await rentalContractService.getRentalContracts(
         currentPage,
         orderBy,
         sortDirection,
+        status,
+        startDate,
+        endDate,
         searchTerm
       );
 
@@ -75,25 +91,25 @@ export const getClients = createAsyncThunk(
   }
 );
 
-export const getClientsByNameAndDocument = createAsyncThunk(
-  "client/getByNameAndDocument",
-  async (term: string, thunkAPI) => {
+export const getRentalContractDetails = createAsyncThunk(
+  "rentalContractDetails/get",
+  async (id: string, thunkAPI) => {
     try {
-      const res = await clientService.getClientsByNameAndDocument(term);
+      const res = await rentalContractService.getRentalContractDetails(id);
 
-      if (res.status === "Error") {
+      if (res.error) {
         return thunkAPI.rejectWithValue(res.message);
       }
 
       return res;
     } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.message || "Erro inesperado");
+      return thunkAPI.rejectWithValue(error.message || "Erro desconhecido.");
     }
   }
 );
 
-export const clientSlice = createSlice({
-  name: "client",
+export const rentalContractSlice = createSlice({
+  name: "rentalContract",
   initialState,
   reducers: {
     reset: (state) => {
@@ -104,52 +120,52 @@ export const clientSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(insertClient.pending, (state) => {
+      .addCase(insertRentalContract.pending, (state) => {
         state.loading = true;
         state.error = false;
         state.success = false;
       })
-      .addCase(insertClient.fulfilled, (state, action) => {
+      .addCase(insertRentalContract.fulfilled, (state, action) => {
         state.loading = false;
         state.error = false;
         state.success = true;
-        state.message = "Cliente adicionado";
+        state.message = "Contrato de aluguel adicionado";
       })
-      .addCase(insertClient.rejected, (state, action) => {
+      .addCase(insertRentalContract.rejected, (state, action) => {
         state.loading = false;
         state.success = false;
         state.error = true;
         state.message = action.payload as string;
       })
-      .addCase(getClients.pending, (state) => {
+      .addCase(getRentalContracts.pending, (state) => {
         state.loading = true;
         state.error = false;
         state.message = null;
       })
-      .addCase(getClients.fulfilled, (state, action) => {
+      .addCase(getRentalContracts.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
-        state.clients = action.payload.items;
+        state.rentalContracts = action.payload.items;
         state.totalPages = action.payload.totalPages;
         state.currentPage = action.payload.currentPage;
         state.totalCount = action.payload.totalCount;
       })
-      .addCase(getClients.rejected, (state, action) => {
+      .addCase(getRentalContracts.rejected, (state, action) => {
         state.loading = false;
         state.error = true;
         state.message = action.payload as string;
       })
-      .addCase(getClientsByNameAndDocument.pending, (state) => {
+      .addCase(getRentalContractDetails.pending, (state) => {
         state.loading = true;
         state.error = false;
         state.message = null;
       })
-      .addCase(getClientsByNameAndDocument.fulfilled, (state, action) => {
+      .addCase(getRentalContractDetails.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
-        state.clients = action.payload;
+        state.rentalContract = action.payload;
       })
-      .addCase(getClientsByNameAndDocument.rejected, (state, action) => {
+      .addCase(getRentalContractDetails.rejected, (state, action) => {
         state.loading = false;
         state.error = true;
         state.message = action.payload as string;
@@ -157,5 +173,5 @@ export const clientSlice = createSlice({
   },
 });
 
-export const { reset } = clientSlice.actions;
-export default clientSlice.reducer;
+export const { reset } = rentalContractSlice.actions;
+export default rentalContractSlice.reducer;

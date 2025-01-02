@@ -1,6 +1,6 @@
 import ClientSearch from "../client/ClientSearch";
 import PropertySearch from "../property/PropertySearch";
-import TimePicker from "../utils/TimePicker";
+import TimePicker from "../utils/DateTimePicker";
 
 type VisitFormProps = {
   situacao: string;

@@ -36,10 +36,12 @@ const ClientsTable: React.FC<ClientsTableProps> = ({ clients, handleSort }) => {
       </thead>
 
       <tbody>
-        {clients.map((cliente) => (
+        {clients.map((cliente, index) => (
           <tr
             key={cliente.clienteId}
-            className="hover:bg-gray-50 even:bg-gray-100"
+            className={`hover:bg-gray-50 ${
+              index % 2 === 0 ? "bg-white" : "bg-gray-200"
+            }`}
           >
             <td className="px-6 py-4 text-center truncate border-r">
               {cliente.tipoCliente === "Pessoa Fisica" ? "PF" : "PJ"}

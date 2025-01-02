@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import Tag from "../utils/Tag";
 import InsertClientModal from "./InsertClientModal";
+import { formatCpfCnpj } from "../../utils/formats";
 
 type ClientSearchProps = {
   onClientSelect: (clientId: string) => void;
@@ -81,7 +82,12 @@ const ClientSearch = ({
     <div ref={componentRef} className="relative">
       {/* Usar o componente Tag para cliente selecionado */}
       {selectedClient ? (
-        <Tag label={selectedClient.nome} onRemove={handleRemoveClient} />
+        <Tag
+          label={`Cód. ${selectedClient.codigo} | ${
+            selectedClient.nome
+          } | CPF/CNPJ: ${formatCpfCnpj(selectedClient.cpfCnpj)}`}
+          onRemove={handleRemoveClient}
+        />
       ) : (
         <input
           type="text"

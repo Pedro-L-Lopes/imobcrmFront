@@ -11,10 +11,7 @@ interface MainDetailsProps {
   ) => void;
 }
 
-const MainDetailsForm: React.FC<MainDetailsProps> = ({
-  formData,
-  handleChange,
-}) => {
+const MainDetailsForm = ({ formData, handleChange }: MainDetailsProps) => {
   const handleCurrencyChange = (fieldName: string, value: number) => {
     handleChange({
       target: { name: fieldName, value },
@@ -186,11 +183,7 @@ const MainDetailsForm: React.FC<MainDetailsProps> = ({
                   name="area"
                   value={formData.area}
                   onChange={handleChange}
-                  className={`w-full border p-2 rounded ${
-                    formData.area! > 0
-                      ? "border-green-500"
-                      : "border-red-500 bg-red-50"
-                  }`}
+                  className={`w-full border border-gray-400 p-2 rounded`}
                 />
               </div>
               <div>
@@ -374,11 +367,7 @@ const MainDetailsForm: React.FC<MainDetailsProps> = ({
               name="descricao"
               value={formData.descricao || ""}
               onChange={handleChange}
-              className={`w-full border p-2 rounded ${
-                formData.descricao
-                  ? "border-green-500"
-                  : "border-red-500 bg-red-50"
-              }`}
+              className={`w-full border border-gray-400 p-2 rounded`}
             ></textarea>
             <p className="opacity-30">{formData.descricao?.length}/255</p>
           </section>

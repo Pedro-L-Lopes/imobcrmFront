@@ -4,6 +4,7 @@ import { PropertyType } from "../types/property";
 
 type PropertyState = {
   propertys: PropertyType[];
+  property: PropertyType;
   loading: boolean;
   error: boolean;
   success: boolean;
@@ -15,6 +16,7 @@ type PropertyState = {
 
 const initialState: PropertyState = {
   propertys: [],
+  property: {},
   loading: false,
   error: false,
   success: false,
@@ -130,6 +132,28 @@ export const searchproperties = createAsyncThunk(
   }
 );
 
+type ChangeStatusParams = {
+  propertyId: string;
+  status: string;
+};
+
+export const changeStatus = createAsyncThunk(
+  "property/changeStatus",
+  async ({ propertyId, status }: ChangeStatusParams, thunkAPI) => {
+    try {
+      const response = await propertyService.changeStatus(propertyId, status);
+
+      if (response.error) {
+        return thunkAPI.rejectWithValue(response.message);
+      }
+
+      return response;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message || "Erro desconhecido.");
+    }
+  }
+);
+
 export const propertySlice = createSlice({
   name: "property",
   initialState,
@@ -189,6 +213,29 @@ export const propertySlice = createSlice({
       })
       .addCase(searchproperties.rejected, (state, action) => {
         state.loading = false;
+        state.error = true;
+        state.message = action.payload as string;
+      })
+      .addCase(changeStatus.pending, (state) => {
+        state.loading = true;
+        state.error = false;
+        state.success = false;
+      })
+      .addCase(changeStatus.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = false;
+        state.success = true;
+        state.message = "Status do imóvel atualizado";
+        state.propertys.map((property) => {
+          if (property.imovelId === action.payload.property.imovelId) {
+            return (property.codigo = action.payload.property.codigo);
+          }
+          return property;
+        });
+      })
+      .addCase(changeStatus.rejected, (state, action) => {
+        state.loading = false;
+        state.success = false;
         state.error = true;
         state.message = action.payload as string;
       });

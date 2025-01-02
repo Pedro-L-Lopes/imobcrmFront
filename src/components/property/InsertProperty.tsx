@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import StepProgress from "./StepProgress";
+import StepProgress from "../utils/StepProgress";
 import AddressOwnerForm from "./forms/AddressOwnerForm";
 import MainDetailsForm from "./forms/MainDetailsForm";
 import AdditionalDetailsForm from "./forms/AdditionalDetailsForm";
@@ -12,7 +12,7 @@ import InsertHeader from "../InsertHeader";
 import Message from "../utils/Message";
 import { useNavigate } from "react-router-dom";
 
-const InsertProperty: React.FC = () => {
+const InsertProperty = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -73,9 +73,7 @@ const InsertProperty: React.FC = () => {
         !!formData.tipoImovel &&
         !!formData.destinacao &&
         !!formData.situacao &&
-        !!formData.valor &&
-        !!formData.area &&
-        !!formData.descricao,
+        !!formData.area,
       3: !!formData.proprietarioId,
     };
 
@@ -191,7 +189,7 @@ const InsertProperty: React.FC = () => {
         CADASTRO DE IMÓVEL
       </h1>
 
-      <StepProgress currentStep={currentStep} />
+      <StepProgress stepType="propertyType" currentStep={currentStep} />
 
       <form onSubmit={handleSubmit}>
         <div className="mt-6">

@@ -12,11 +12,14 @@ import InsertProperty from "./components/property/InsertProperty";
 import Location from "./pages/Location";
 import Visit from "./pages/Visit";
 import InsertVisit from "./components/visit/InsertVisit";
+import RentalContract from "./pages/RentalContract";
+import InsertRentalContract from "./components/rentalContracts/InsertRentalContract";
+import RentalContractDetail from "./components/rentalContracts/RentalContractDetail";
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   return (
-    <div className="flex min-h-screen">
+    <div className="">
       <BrowserRouter>
         <Sidebar open={sidebarOpen} setOpen={setSidebarOpen} />
 
@@ -38,6 +41,16 @@ function App() {
 
             <Route path="/visitas" element={<Visit />} />
             <Route path="/nova-visita" element={<InsertVisit />} />
+
+            <Route path="/contratos" element={<RentalContract />} />
+            <Route
+              path="/novo-contrato-aluguel"
+              element={<InsertRentalContract />}
+            />
+            <Route
+              path="/contrato-aluguel/detalhes/:id"
+              element={<RentalContractDetail />}
+            />
           </Routes>
         </div>
       </BrowserRouter>

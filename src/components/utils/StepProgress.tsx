@@ -1,21 +1,47 @@
 import { motion } from "framer-motion";
+import { BsHouse, BsPaperclip } from "react-icons/bs";
+import { FaPercentage } from "react-icons/fa";
+import { FaHouse } from "react-icons/fa6";
 import { IoMdCheckboxOutline, IoMdPaper } from "react-icons/io";
-import { MdFormatAlignLeft, MdPersonOutline } from "react-icons/md";
+import {
+  MdFormatAlignLeft,
+  MdPersonAdd,
+  MdPersonOutline,
+} from "react-icons/md";
+import { PiHouse } from "react-icons/pi";
+import { TbPercentage, TbTax } from "react-icons/tb";
+
+interface Step {
+  label: string;
+  icon: JSX.Element;
+}
 
 interface StepProgressProps {
   currentStep: number;
+  stepType: string;
 }
 
-const steps = [
-  { label: "ENDEREÇO", icon: <IoMdCheckboxOutline size={30} /> },
-  { label: "DADOS PRINCIPAIS", icon: <IoMdPaper size={30} /> },
-  { label: "ANOTAÇÕES", icon: <MdFormatAlignLeft size={30} /> },
-  { label: "RELACIONAMENTOS", icon: <MdPersonOutline size={30} /> },
-];
+const stepsMap: Record<string, Step[]> = {
+  propertyType: [
+    { label: "ENDEREÇO", icon: <IoMdCheckboxOutline size={30} /> },
+    { label: "DADOS PRINCIPAIS", icon: <IoMdPaper size={30} /> },
+    { label: "ANOTAÇÕES", icon: <MdFormatAlignLeft size={30} /> },
+    { label: "RELACIONAMENTOS", icon: <MdPersonOutline size={30} /> },
+  ],
+  rentalContractType: [
+    { label: "IMÓVEL", icon: <PiHouse size={30} /> },
+    { label: "LOCATÁRIO", icon: <MdPersonOutline size={30} /> },
+    { label: "DADOS PRINCIPAIS", icon: <IoMdPaper size={30} /> },
+    { label: "TAXAS", icon: <TbPercentage size={30} /> },
+    { label: "ANOTAÇÕES", icon: <BsPaperclip size={30} /> },
+  ],
+};
 
-const StepProgress: React.FC<StepProgressProps> = ({ currentStep }) => {
+const StepProgress = ({ currentStep, stepType }: StepProgressProps) => {
+  const steps = stepsMap[stepType];
+
   return (
-    <div className="relative flex items-center justify-between space-x-4">
+    <div className="relative flex items-center justify-between space-x-4 bg-gray-200 p-2">
       {/* Linha de progresso (parte preenchida) */}
       <motion.div
         className="absolute top-6 left-8 h-1 bg-green-500"
@@ -27,9 +53,9 @@ const StepProgress: React.FC<StepProgressProps> = ({ currentStep }) => {
       {steps.map((step, index) => (
         <motion.div
           key={index}
-          className="relative z-10 flex flex-col items-center"
+          className="relative z-10 flex flex-col items-center border w-full"
           initial={{ scale: 1 }}
-          animate={{ scale: index === currentStep ? 1.2 : 1 }}
+          animate={{ scale: index === currentStep ? 1 : 1 }}
           transition={{ duration: 0.3 }}
         >
           {/* Círculos para os passos */}
