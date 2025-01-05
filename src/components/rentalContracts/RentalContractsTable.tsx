@@ -1,7 +1,7 @@
 import { RentalContractType } from "../../types/rentalContract";
 import { MdOutlineCode } from "react-icons/md";
 import { formatCurrency, formatDate } from "../../utils/formats";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface RentalContractTableProps {
   contracts: RentalContractType[];
@@ -102,18 +102,12 @@ const RentalContractTable = ({
             <td className="px-6 py-4 truncate border-r">
               {contract.locatarioNome}
             </td>
-            <td className="px-6 py-4 text-center">
-              <select
-                className="bg-gray-100 border border-gray-300 rounded-md px-2 py-1 text-gray-700 focus:outline-none hover:bg-gray-200 cursor-pointer"
-                onChange={(e) =>
-                  handleClick(contract.contratoId!, e.target.value)
-                }
-              >
-                <option value="">Ações</option>
-                <option value="detalhes">Detalhes</option>
-                <option value="editar">Editar</option>
-                <option value="excluir">Excluir</option>
-              </select>
+            <td className="px-6 py-4 flex items-center justify-center">
+              <Link to={`/contrato-aluguel/detalhes/${contract.contratoId}`}>
+                <p className="bg-blue-500 text-white px-3 py-1 rounded focus:outline-none hover:bg-blue-400 transition-all cursor-pointer">
+                  Detalhes
+                </p>
+              </Link>
             </td>
           </tr>
         ))}

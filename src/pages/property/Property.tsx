@@ -1,4 +1,4 @@
-import PropertyList from "../components/property/PropertyList";
+import PropertyList from "../../components/property/PropertyList";
 
 const Property = () => {
   return (

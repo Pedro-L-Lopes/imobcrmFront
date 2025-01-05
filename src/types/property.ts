@@ -49,5 +49,7 @@ export interface PropertyType {
 
   proprietarioNome?: string;
 
+  UltimaPubliRedes?: Date | null;
+
   ultimaEdicao?: Date;
 }

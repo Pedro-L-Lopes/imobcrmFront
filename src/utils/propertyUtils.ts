@@ -26,8 +26,8 @@ export const filterOptions = [
     name: "purpose",
     label: "Finalidade",
     options: [
-      { value: "venda", label: "Venda" },
-      { value: "aluguel", label: "Aluguel" },
+      { value: "Venda", label: "Venda" },
+      { value: "Aluguel", label: "Aluguel" },
     ],
   },
   {
@@ -60,11 +60,11 @@ export const filterOptions = [
     options: [
       { value: "Disponível", label: "Disponível" },
       { value: "Moderação", label: "Moderação" },
-      { value: "alugado", label: "Alugado" },
-      { value: "vendido", label: "Vendido" },
-      { value: "alugado/Disponível Venda", label: "Alugado/Disponível Venda" },
-      { value: "em reforma", label: "Em Reforma" },
-      { value: "indisponível", label: "Indisponível" },
+      { value: "Alugado", label: "Alugado" },
+      { value: "Vendido", label: "Vendido" },
+      { value: "Alugado/Disponível Venda", label: "Alugado/Disponível Venda" },
+      { value: "Em reforma", label: "Em Reforma" },
+      { value: "Indisponível", label: "Indisponível" },
     ],
   },
   {

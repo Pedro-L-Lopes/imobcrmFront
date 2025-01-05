@@ -7,7 +7,7 @@ import Sidebar from "./components/Sidebar";
 import Home from "./pages/Home";
 import Client from "./pages/Client";
 import InsertClient from "./components/client/InsertClient";
-import Property from "./pages/Property";
+
 import InsertProperty from "./components/property/InsertProperty";
 import Location from "./pages/Location";
 import Visit from "./pages/Visit";
@@ -15,6 +15,8 @@ import InsertVisit from "./components/visit/InsertVisit";
 import RentalContract from "./pages/RentalContract";
 import InsertRentalContract from "./components/rentalContracts/InsertRentalContract";
 import RentalContractDetail from "./components/rentalContracts/RentalContractDetail";
+import Property from "./pages/property/Property";
+import PropertyDetails from "./pages/property/PropertyDetails";
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -38,6 +40,7 @@ function App() {
 
             <Route path="/imoveis" element={<Property />} />
             <Route path="/novo-imovel" element={<InsertProperty />} />
+            <Route path="/imovel/detalhes/:id" element={<PropertyDetails />} />
 
             <Route path="/visitas" element={<Visit />} />
             <Route path="/nova-visita" element={<InsertVisit />} />

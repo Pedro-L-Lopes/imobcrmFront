@@ -154,6 +154,23 @@ export const changeStatus = createAsyncThunk(
   }
 );
 
+export const getPropertyById = createAsyncThunk(
+  "propertyById/get",
+  async (propertyId: string, thunkAPI) => {
+    try {
+      const response = await propertyService.getPropertyById(propertyId);
+
+      if (response.error) {
+        return thunkAPI.rejectWithValue(response.message);
+      }
+
+      return response;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message || "Erro desconhecido.");
+    }
+  }
+);
+
 export const propertySlice = createSlice({
   name: "property",
   initialState,
@@ -236,6 +253,21 @@ export const propertySlice = createSlice({
       .addCase(changeStatus.rejected, (state, action) => {
         state.loading = false;
         state.success = false;
+        state.error = true;
+        state.message = action.payload as string;
+      })
+      .addCase(getPropertyById.pending, (state) => {
+        state.loading = true;
+        state.error = false;
+        state.message = null;
+      })
+      .addCase(getPropertyById.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.property = action.payload;
+      })
+      .addCase(getPropertyById.rejected, (state, action) => {
+        state.loading = false;
         state.error = true;
         state.message = action.payload as string;
       });

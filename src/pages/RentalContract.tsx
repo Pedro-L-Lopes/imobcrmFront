@@ -2,7 +2,7 @@ import RentalContractList from "../components/rentalContracts/RentalContractsLis
 
 const RentalContract = () => {
   return (
-    <main className="w-11/12 -ml-7">
+    <main className="w-full">
       <RentalContractList />
     </main>
   );

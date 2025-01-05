@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { PropertyType } from "../../types/property";
 import { PiHouseLine } from "react-icons/pi";
 
@@ -5,7 +6,7 @@ interface PropertyCardProps {
   property: PropertyType;
 }
 
-const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
+const PropertyCard = ({ property }: PropertyCardProps) => {
   return (
     <div className="border bg-white flex flex-col lg:flex-row">
       {/* Espaço reservado para imagem */}
@@ -30,12 +31,12 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
               {property.cidade} - {property.estado}
             </p>
           </div>
-          <select className="bg-gray-100 px-3 py-1 rounded focus:outline-none hover:bg-gray-200 cursor-pointer">
-            <option>Ações</option>
-            <option>Detalhes</option>
-            <option>Editar</option>
-            <option>Excluir</option>
-          </select>
+          <Link
+            className="bg-blue-500 text-white px-3 py-1 rounded focus:outline-none hover:bg-blue-400 transition-all cursor-pointer"
+            to={`/imovel/detalhes/${property.imovelId}`}
+          >
+            <p>Detalhes</p>
+          </Link>
         </div>
 
         {/* Valores e área */}
@@ -61,9 +62,9 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
         <div className="flex flex-wrap gap-2">
           <span
             className={`px-3 py-1 rounded text-white font-bold ${
-              property.situacao?.toLowerCase() === "Disponível"
+              property.situacao?.toLowerCase() === "disponível"
                 ? "bg-green-600"
-                : property.situacao?.toLowerCase() === "Moderação"
+                : property.situacao?.toLowerCase() === "moderação"
                 ? "bg-yellow-600"
                 : property.situacao?.toLowerCase() === "alugado"
                 ? "bg-blue-600"

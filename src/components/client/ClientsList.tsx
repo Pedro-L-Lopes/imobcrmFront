@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "../../store";
 import { usePagination } from "../../hooks/usePagination";
 import { useSort } from "../../hooks/useSort";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getClients } from "../../slices/clientSlice";
 import Search from "../Search";
 import Message from "../utils/Message";
@@ -11,9 +11,11 @@ import ClientsTable from "./ClientsTable";
 import Pagination from "../utils/Pagination";
 import Button from "../utils/Button";
 import { AiOutlinePlus } from "react-icons/ai";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
 
 function ClientList() {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
+
   const totalPages = useSelector(
     (state: RootState) => state.client.totalPages || 1
   );
@@ -38,6 +40,10 @@ function ClientList() {
   useEffect(() => {
     dispatch(getClients({ currentPage, orderBy, sortDirection, searchTerm }));
   }, [dispatch, currentPage, orderBy, sortDirection, searchTerm]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [orderBy, sortDirection]);
 
   const handleSearch = useCallback(
     (term: string) => {

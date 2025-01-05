@@ -1,6 +1,7 @@
 import React from "react";
 import { ClientType } from "../../types/client";
 import { MdOutlineCode } from "react-icons/md";
+import { Link, useNavigate } from "react-router-dom";
 
 interface ClientsTableProps {
   clients: ClientType[];
@@ -8,6 +9,17 @@ interface ClientsTableProps {
 }
 
 const ClientsTable: React.FC<ClientsTableProps> = ({ clients, handleSort }) => {
+  const navigate = useNavigate();
+
+  const handleClick = (id: string, action: string) => {
+    if (action === "detalhes") {
+      navigate(`/cliente/detalhes/${id}`);
+    } else if (action === "editar") {
+      navigate(`/cliente/editar/${id}`);
+    } else if (action === "excluir") {
+      navigate(`/cliente/excluir/${id}`);
+    }
+  };
   return (
     <table className="w-full text-sm text-gray-800 rounded-lg overflow-hidden shadow-lg">
       <thead className="bg-blue-600 text-white uppercase text-xs tracking-wider">
@@ -46,7 +58,10 @@ const ClientsTable: React.FC<ClientsTableProps> = ({ clients, handleSort }) => {
             <td className="px-6 py-4 text-center truncate border-r">
               {cliente.tipoCliente === "Pessoa Fisica" ? "PF" : "PJ"}
             </td>
-            <td className="px-6 py-4 text-center truncate border-r">
+            <td
+              onClick={() => handleClick(cliente.clienteId!, "detalhes")}
+              className="px-6 py-4 text-center truncate border-r text-blue-500 cursor-pointer"
+            >
               {cliente.codigo}
             </td>
             <td
@@ -58,13 +73,12 @@ const ClientsTable: React.FC<ClientsTableProps> = ({ clients, handleSort }) => {
             <td className="px-6 py-4 truncate border-r">{cliente.telefone}</td>
             <td className="px-6 py-4 truncate border-r">{cliente.email}</td>
             <td className="px-6 py-4 truncate border-r">{cliente.cpfCnpj}</td>
-            <td className="px-6 py-4 text-center">
-              <select className="bg-gray-100 border border-gray-300 rounded-md px-2 py-1 text-gray-700 focus:outline-none hover:bg-gray-200 cursor-pointer">
-                <option>Ações</option>
-                <option>Detalhes</option>
-                <option>Editar</option>
-                <option>Excluir</option>
-              </select>
+            <td className="px-6 py-4 flex items-center justify-center">
+              <Link to={`/cliente/detalhes/${cliente.clienteId}`}>
+                <p className="bg-blue-500 text-white px-3 py-1 rounded focus:outline-none hover:bg-blue-400 transition-all cursor-pointer">
+                  Detalhes
+                </p>
+              </Link>
             </td>
           </tr>
         ))}
