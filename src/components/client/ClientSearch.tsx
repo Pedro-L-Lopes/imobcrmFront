@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { getClientsByNameAndDocument } from "../../slices/clientSlice";
-import { ClientType } from "../../types/client";
+import { ClientType } from "../../@types/client";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import Tag from "../utils/Tag";

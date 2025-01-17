@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { PropertyType } from "../../types/property";
+import { PropertyType } from "../../@types/property";
 import { PiHouseLine } from "react-icons/pi";
 
 interface PropertyCardProps {

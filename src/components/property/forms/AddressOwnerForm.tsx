@@ -1,5 +1,5 @@
 import React from "react";
-import { PropertyType } from "../../../types/property";
+import { PropertyType } from "../../../@types/property";
 import ClientSearch from "../../client/ClientSearch";
 import LocationSearch from "../../location/LocationSearch";
 

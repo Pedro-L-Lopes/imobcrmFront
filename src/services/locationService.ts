@@ -1,5 +1,5 @@
 import { api, requestConfig } from "../lib/config";
-import { LocationType } from "../types/location";
+import { LocationType } from "../@types/location";
 
 // Inserir localização
 const insertLocation = async (location: LocationType) => {

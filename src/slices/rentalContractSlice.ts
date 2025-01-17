@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import rentalContractService from "../services/rentalContractService";
-import { RentalContractType } from "../types/rentalContract";
+import { RentalContractType } from "../@types/rentalContract";
 
 type RentalContractState = {
   rentalContracts: RentalContractType[];

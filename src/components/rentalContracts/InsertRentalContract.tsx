@@ -13,6 +13,7 @@ import TaxesForm from "./forms/TaxesForm";
 import GeneralNotesForm from "./forms/GeneralNotesForm";
 import { CiCircleAlert } from "react-icons/ci";
 import { changeStatus } from "../../slices/propertySlice";
+import { generatePayments } from "../../slices/rentPaymentSlice";
 
 const InsertRentalContract = () => {
   const dispatch = useAppDispatch();
@@ -46,6 +47,10 @@ const InsertRentalContract = () => {
     semMultaApos: "",
     anotacoesGerais: "",
   });
+
+  console.log("Inicio: " + formData.inicioContrato);
+  console.log("Fim: " + formData.fimContrato);
+  console.log("Primeiro: " + formData.primeiroAluguel);
 
   const validateStep = () => {
     const validations: Record<number, boolean> = {
@@ -128,6 +133,8 @@ const InsertRentalContract = () => {
         );
 
         setShowSuccess(true);
+
+        dispatch(generatePayments(contractId));
 
         setTimeout(() => {
           navigate(`/contrato-aluguel/detalhes/${contractId}`);

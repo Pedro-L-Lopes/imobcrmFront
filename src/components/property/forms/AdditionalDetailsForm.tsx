@@ -1,6 +1,6 @@
 import React from "react";
 import ClientSearch from "../../client/ClientSearch";
-import { PropertyType } from "../../../types/property";
+import { PropertyType } from "../../../@types/property";
 
 interface AdditionalDetailsProps {
   formData: PropertyType;

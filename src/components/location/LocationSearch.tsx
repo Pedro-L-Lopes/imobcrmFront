@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
-import { LocationType } from "../../types/location";
+import { LocationType } from "../../@types/location";
 import { getLocationsByOneTerm } from "../../slices/locationSlice";
 import Tag from "../utils/Tag"; // Importa o componente Tag
 import InsertLocationModal from "./InsertLocationModal";

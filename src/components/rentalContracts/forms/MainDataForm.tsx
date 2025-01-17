@@ -1,4 +1,4 @@
-import { RentalContractType } from "../../../types/rentalContract";
+import { RentalContractType } from "../../../@types/rentalContract";
 import DatePicker from "../../utils/DatePicker";
 import CurrencyInput from "../../utils/CurrencyInput";
 import { useEffect } from "react";

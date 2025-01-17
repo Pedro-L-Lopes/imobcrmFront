@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { formatCurrency, formatDate } from "../../utils/formats";
 import FixedAccountCard from "../fixedAccount/FixedAccountCard";
-import { FixedAccountType } from "../../types/fixedAccount";
+import { FixedAccountType } from "../../@types/fixedAccount";
 import DetailsSection from "../utils/DetailsSection";
 
 const PropertyDetailsForm = ({ property }: any) => {

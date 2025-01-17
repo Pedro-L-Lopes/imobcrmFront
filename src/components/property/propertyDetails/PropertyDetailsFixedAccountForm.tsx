@@ -1,4 +1,4 @@
-import { FixedAccountType } from "../../../types/fixedAccount";
+import { FixedAccountType } from "../../../@types/fixedAccount";
 import AddFixedAccount from "../../fixedAccount/AddFixedAccount";
 import FixedAccountCard from "../../fixedAccount/FixedAccountCard";
 import DetailsSection from "../../utils/DetailsSection";

@@ -1,4 +1,4 @@
-import { RentalContractType } from "../../../types/rentalContract";
+import { RentalContractType } from "../../../@types/rentalContract";
 
 interface GeneralNotesFormProps {
   formData: RentalContractType;

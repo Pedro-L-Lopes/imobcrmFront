@@ -1,9 +1,18 @@
 import { api, requestConfig } from "../lib/config";
-import { RentalContractType } from "../types/rentalContract";
+import { RentalContractType } from "../@types/rentalContract";
+import dayjs from "dayjs";
 
 // Inserir contrato
 const insertRentalContract = async (contract: RentalContractType) => {
-  const config = requestConfig("POST", contract);
+  // Formatar as datas antes de enviar
+  const formattedContract = {
+    ...contract,
+    inicioContrato: dayjs(contract.inicioContrato).toISOString(),
+    fimContrato: dayjs(contract.fimContrato).toISOString(),
+    primeiroAluguel: dayjs(contract.primeiroAluguel).toISOString(),
+  };
+
+  const config = requestConfig("POST", formattedContract);
 
   try {
     const res = await fetch(api + `contratoAluguel`, config);

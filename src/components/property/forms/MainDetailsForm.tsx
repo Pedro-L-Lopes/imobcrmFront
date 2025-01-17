@@ -1,5 +1,5 @@
 import { filterOptions } from "../../../utils/propertyUtils";
-import { PropertyType } from "../../../types/property";
+import { PropertyType } from "../../../@types/property";
 import CurrencyInput from "../../utils/CurrencyInput";
 
 interface MainDetailsProps {

@@ -1,5 +1,5 @@
 import { api, requestConfig } from "../lib/config";
-import { PropertyType } from "../types/property";
+import { PropertyType } from "../@types/property";
 //import { PropertyType } from "../types/property";
 
 // Adicionar imóvel

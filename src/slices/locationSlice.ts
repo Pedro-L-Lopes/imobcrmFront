@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import locationService from "../services/locationService";
-import { LocationType } from "../types/location";
+import { LocationType } from "../@types/location";
 
 type LocationState = {
   locations: LocationType[];

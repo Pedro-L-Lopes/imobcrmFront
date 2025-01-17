@@ -1,6 +1,6 @@
 import React from "react";
 import PropertySearch from "../../property/PropertySearch";
-import { RentalContractType } from "../../../types/rentalContract";
+import { RentalContractType } from "../../../@types/rentalContract";
 import { CiCircleAlert } from "react-icons/ci";
 
 interface PropertyFormProps {

@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import clientService from "../services/clientService";
-import { ClientType } from "../types/client";
+import { ClientType } from "../@types/client";
 
 type ClientState = {
   clients: ClientType[];
@@ -49,7 +49,7 @@ export const insertClient = createAsyncThunk(
     }
   }
 );
- 
+
 export const getClients = createAsyncThunk(
   "client/get",
   async (

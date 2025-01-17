@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { searchproperties } from "../../slices/propertySlice";
-import { PropertyType } from "../../types/property";
+import { PropertyType } from "../../@types/property";
 import { Link } from "react-router-dom";
 import { CiHome, CiLocationOn, CiMoneyBill, CiUser } from "react-icons/ci";
 import { BsX } from "react-icons/bs";

@@ -1,5 +1,5 @@
 import { CiCircleAlert } from "react-icons/ci";
-import { RentalContractType } from "../../../types/rentalContract";
+import { RentalContractType } from "../../../@types/rentalContract";
 import ClientSearch from "../../client/ClientSearch";
 
 interface TenantFormProps {

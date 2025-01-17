@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import propertyService from "../services/propertyService";
-import { PropertyType } from "../types/property";
+import { PropertyType } from "../@types/property";
 
 type PropertyState = {
   propertys: PropertyType[];

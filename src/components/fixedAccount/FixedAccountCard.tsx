@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FixedAccountType } from "../../types/fixedAccount";
+import { FixedAccountType } from "../../@types/fixedAccount";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { formatDate } from "../../utils/formats";
 

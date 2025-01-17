@@ -6,6 +6,8 @@ import { propertySlice as propertyReducer } from "./slices/propertySlice";
 import { visitSlice as visitReducer } from "./slices/visitSlice";
 import { rentalContractSlice as rentalContractReducer } from "./slices/rentalContractSlice";
 import { fixedAccountSlice as fixedAccountReducer } from "./slices/fixedAccountSlice";
+import { rentPaymentSlice as rentPaymentReducer } from "./slices/rentPaymentSlice";
+import { rentControlSlice as rentControlReducer } from "./slices/rentControlSlice";
 
 export const store = configureStore({
   reducer: {
@@ -15,6 +17,8 @@ export const store = configureStore({
     visit: visitReducer.reducer,
     rentalContract: rentalContractReducer.reducer,
     fixedAccount: fixedAccountReducer.reducer,
+    rentPayment: rentPaymentReducer.reducer,
+    rentControl: rentControlReducer.reducer,
   },
 });
 

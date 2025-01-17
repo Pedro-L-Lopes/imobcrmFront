@@ -14,9 +14,10 @@ import Visit from "./pages/Visit";
 import InsertVisit from "./components/visit/InsertVisit";
 import RentalContract from "./pages/RentalContract";
 import InsertRentalContract from "./components/rentalContracts/InsertRentalContract";
-import RentalContractDetail from "./components/rentalContracts/RentalContractDetail";
+import RentalContractDetails from "./pages/rentalContract/RentalContractDetails";
 import Property from "./pages/property/Property";
 import PropertyDetails from "./pages/property/PropertyDetails";
+import RentControl from "./pages/rentControl/RentControl";
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -52,8 +53,10 @@ function App() {
             />
             <Route
               path="/contrato-aluguel/detalhes/:id"
-              element={<RentalContractDetail />}
+              element={<RentalContractDetails />}
             />
+
+            <Route path="/controle-aluguel" element={<RentControl />} />
           </Routes>
         </div>
       </BrowserRouter>

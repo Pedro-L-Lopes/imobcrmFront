@@ -6,7 +6,7 @@ import AdditionalDetailsForm from "./forms/AdditionalDetailsForm";
 import NotesDescriptionForm from "./forms/NotesDescriptionForm";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { insertProperty } from "../../slices/propertySlice";
-import { PropertyType } from "../../types/property";
+import { PropertyType } from "../../@types/property";
 import { useSelector } from "react-redux";
 import InsertHeader from "../InsertHeader";
 import Message from "../utils/Message";

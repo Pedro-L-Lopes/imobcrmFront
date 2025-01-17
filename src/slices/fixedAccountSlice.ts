@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import FixedAccountService from "../services/fixedAccountService";
-import { FixedAccountType } from "../types/fixedAccount";
+import { FixedAccountType } from "../@types/fixedAccount";
 
 type FixedAccountState = {
   fixedAccounts: FixedAccountType[];

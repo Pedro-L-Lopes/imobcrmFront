@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import visitService from "../services/visitService";
-import { visitType } from "../types/visit";
+import { visitType } from "../@types/visit";
 
 type VisitState = {
   visits: visitType[];

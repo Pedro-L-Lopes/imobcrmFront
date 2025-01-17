@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { visitType } from "../../types/visit";
+import { visitType } from "../../@types/visit";
 import dayjs from "dayjs";
 import Report from "../utils/report/VisitRepostModal"; // Certifique-se de ajustar o caminho conforme necessário
 

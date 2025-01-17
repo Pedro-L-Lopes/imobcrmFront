@@ -1,12 +1,9 @@
-import { useNavigate, useParams } from "react-router-dom";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useAppDispatch } from "../../hooks/useAppDispatch";
-import { getRentalContractDetails } from "../../slices/rentalContractSlice";
+import { useNavigate } from "react-router-dom";
 import { formatCurrency, formatDate } from "../../utils/formats";
 import Message from "../utils/Message";
 import InsertHeader from "../InsertHeader";
-import { CiCircleAlert, CiCircleInfo } from "react-icons/ci";
+import { CiCircleInfo } from "react-icons/ci";
+import { RentalContractType } from "../../@types/rentalContract";
 
 const ContractDetailsSection = ({
   title,
@@ -24,20 +21,12 @@ const ContractDetailsSection = ({
   </div>
 );
 
-const RentalContractDetail = () => {
-  const { id } = useParams();
-  const dispatch = useAppDispatch();
+interface RentalContractProps {
+  rentalContract: RentalContractType;
+}
+
+const RentalContractDetailForm = ({ rentalContract }: RentalContractProps) => {
   const navigate = useNavigate();
-
-  const { rentalContract, error, loading, message } = useSelector(
-    (state: any) => state.rentalContract
-  );
-
-  useEffect(() => {
-    if (id) {
-      dispatch(getRentalContractDetails(id));
-    }
-  }, [id, dispatch]);
 
   const handleClick = (id: string, action: string) => {
     if (action === "imovel") {
@@ -47,38 +36,9 @@ const RentalContractDetail = () => {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="text-center py-10 text-gray-600">
-        Carregando detalhes do contrato...
-      </div>
-    );
-  }
-
-  if (!rentalContract) {
-    return (
-      <div className="text-center text-red-500 mt-10">
-        Contrato não encontrado.
-      </div>
-    );
-  }
-
   return (
-    <main className="p-6 min-h-screen">
-      <InsertHeader
-        title={`Detalhes do contrato ${rentalContract.codigo}`}
-        paths={[
-          { name: "Dashboard", url: "/dashboard" },
-          { name: "Contratos", url: "/contratos" },
-          {
-            name: `Detalhes contrato aluguel ${rentalContract.codigo}`,
-            url: `/contrato-aluguel/detalhes/${rentalContract.contratoId}`,
-          },
-        ]}
-      />
-
-      {error && <Message text={message} type="error" />}
-      <div className="p-6 bg-white">
+    <main className="min-h-screen">
+      <div className="bg-white">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
           <ContractDetailsSection title="Dados Principais">
             <div className="grid  grid-cols-3 items-center justify-between">
@@ -107,7 +67,7 @@ const RentalContractDetail = () => {
               <p className="flex flex-col items-start justify-center">
                 <span className="opacity-65 text-sm ">Valor Aluguel</span>
                 <span className="bg-blue-500 text-white p-1 rounded">
-                  {formatCurrency(rentalContract.valorContrato)}
+                  {formatCurrency(rentalContract.valorContrato!)}
                 </span>
               </p>
               <p className="flex flex-col items-start justify-center">
@@ -121,7 +81,7 @@ const RentalContractDetail = () => {
 
           <ContractDetailsSection title="Relacionamentos">
             <button
-              onClick={() => handleClick(rentalContract.imovelId, "imovel")}
+              onClick={() => handleClick(rentalContract.imovelId!, "imovel")}
               className="flex flex-col items-start justify-start mt-2"
             >
               <span className="opacity-65 text-sm">Imóvel</span>
@@ -133,7 +93,7 @@ const RentalContractDetail = () => {
               </span>
             </button>
             <button
-              onClick={() => handleClick(rentalContract.locadorId, "cliente")}
+              onClick={() => handleClick(rentalContract.locadorId!, "cliente")}
               className="flex flex-col items-start justify-start mt-2"
             >
               <span className="opacity-65 text-sm">Locador</span>
@@ -143,7 +103,9 @@ const RentalContractDetail = () => {
               </span>
             </button>
             <button
-              onClick={() => handleClick(rentalContract.locatarioId, "cliente")}
+              onClick={() =>
+                handleClick(rentalContract.locatarioId!, "cliente")
+              }
               className="flex flex-col items-start justify-start mt-2"
             >
               <span className="opacity-65 text-sm">Locatário</span>
@@ -159,13 +121,17 @@ const RentalContractDetail = () => {
               <p className="flex flex-col items-start justify-center">
                 <span className="opacity-65 text-sm">Início Contrato</span>
                 <span className="bg-blue-500 text-white p-1 rounded">
-                  {formatDate(rentalContract.inicioContrato)}
+                  {rentalContract.inicioContrato
+                    ? formatDate(rentalContract.inicioContrato.toString())
+                    : "-"}
                 </span>
               </p>
               <p className="flex flex-col items-start justify-center">
                 <span className="opacity-65 text-sm">Fim Contrato</span>
                 <span className="bg-blue-500 text-white p-1 rounded">
-                  {formatDate(rentalContract.fimContrato)}
+                  {rentalContract.fimContrato
+                    ? formatDate(rentalContract.fimContrato.toString())
+                    : "-"}
                 </span>
               </p>
               <p className="flex flex-col items-start justify-center">
@@ -186,23 +152,29 @@ const RentalContractDetail = () => {
                 <span className="opacity-65 text-sm">
                   Pagamento primeiro aluguel
                 </span>
-                {formatDate(rentalContract.primeiroAluguel)}
+                {rentalContract.primeiroAluguel
+                  ? formatDate(rentalContract.primeiroAluguel.toString())
+                  : "-"}
               </p>
               <p className="flex flex-col items-start justify-center">
                 <span className="opacity-65 text-sm">Ultima renovação</span>
-                {formatDate(rentalContract.ultimaRenovacao)}
+                {rentalContract.ultimaRenovacao
+                  ? formatDate(rentalContract.ultimaRenovacao)
+                  : "-"}
               </p>
             </div>
             <div className="grid  grid-cols-3 items-center justify-between mt-5">
               <p className="flex flex-col items-start justify-center">
                 <span className="opacity-65 text-sm">Data inclusão</span>
-                {formatDate(rentalContract.dataCriacao)}
+                {formatDate(rentalContract.dataCriacao!)}
               </p>
               <p className="flex flex-col items-start justify-center">
                 <span className="opacity-65 text-sm">
                   Data última alteração
                 </span>
-                {formatDate(rentalContract.ultimaEdicao)}
+                {rentalContract.ultimaEdicao
+                  ? formatDate(rentalContract.ultimaEdicao)
+                  : "-"}
               </p>
             </div>
           </ContractDetailsSection>
@@ -221,11 +193,13 @@ const RentalContractDetail = () => {
             <div className="grid  grid-cols-3 items-center justify-between mt-5">
               <p className="flex flex-col items-start justify-center">
                 <span className="opacity-65 text-sm">Rescisão</span>
-                {rentalContract.rescisao}
+                {rentalContract.rescisao ? rentalContract.rescisao : "-"}
               </p>
               <p className="flex flex-col items-start justify-center">
                 <span className="opacity-65 text-sm">Sem Multa Após</span>
-                {rentalContract.semMultaApos}
+                {rentalContract.semMultaApos
+                  ? rentalContract.semMultaApos
+                  : "-"}
               </p>
             </div>
           </ContractDetailsSection>
@@ -241,4 +215,4 @@ const RentalContractDetail = () => {
   );
 };
 
-export default RentalContractDetail;
+export default RentalContractDetailForm;

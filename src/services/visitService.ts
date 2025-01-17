@@ -1,5 +1,5 @@
 import { api, requestConfig } from "../lib/config";
-import { visitType } from "../types/visit";
+import { visitType } from "../@types/visit";
 
 // Inserir visita
 const insertVisit = async (visit: visitType) => {

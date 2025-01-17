@@ -1,5 +1,5 @@
 import React from "react";
-import { ClientType } from "../../types/client";
+import { ClientType } from "../../@types/client";
 import { MdOutlineCode } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 

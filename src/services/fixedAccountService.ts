@@ -1,5 +1,5 @@
 import { api, requestConfig } from "../lib/config";
-import { FixedAccountType } from "../types/fixedAccount";
+import { FixedAccountType } from "../@types/fixedAccount";
 
 const insertFixedAccount = async (client: FixedAccountType) => {
   const config = requestConfig("POST", client);

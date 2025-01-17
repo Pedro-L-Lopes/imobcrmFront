@@ -21,7 +21,6 @@ const AddFixedAccount = ({ imovelId }: any) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(imovelId);
     const newAccount = {
       tipoConta,
       codigoConsulta,
@@ -50,7 +49,7 @@ const AddFixedAccount = ({ imovelId }: any) => {
 
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
-      <Dialog.Trigger className="flex items-center justify-center px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
+      <Dialog.Trigger className="flex items-center justify-center px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-all">
         <BsPlus size={25} /> Adicionar Conta Fixa
       </Dialog.Trigger>
 

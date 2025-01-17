@@ -1,12 +1,14 @@
+import { RentPaymentType } from "../@types/rentPaymantType";
 import { api, requestConfig } from "../lib/config";
-import { ClientType } from "../@types/client";
 
-// Inserir cliente
-const insertClient = async (client: ClientType) => {
-  const config = requestConfig("POST", client);
+const generatePayments = async (contractId: string) => {
+  const config = requestConfig("POST", null);
 
   try {
-    const res = await fetch(api + `cliente`, config);
+    const res = await fetch(
+      api + `pagamentoAluguel/gerar?contractId=${contractId}&extraMonths=0`,
+      config
+    );
     if (!res.ok) {
       const error = await res.json();
       throw new Error(error.message || "Erro ao processar a requisição.");
@@ -17,19 +19,12 @@ const insertClient = async (client: ClientType) => {
   }
 };
 
-// Listagem de clientes
-const getClients = async (
-  page: number,
-  orderBy: string,
-  sortDirection: string,
-  searchTerm: string
-) => {
+const getRentPayments = async (contractId: string) => {
   const config = requestConfig("GET", null);
 
   try {
     const res = await fetch(
-      api +
-        `Cliente?PageNumber=${page}&PageSize=20&OrderBy=${orderBy}&SortDirection=${sortDirection}&searchTerm=${searchTerm}`,
+      api + `pagamentoAluguel?contractId=${contractId}`,
       config
     );
 
@@ -53,12 +48,11 @@ const getClients = async (
   }
 };
 
-// Listar clientes por nome e cpf/cnpj
-const getClientsByNameAndDocument = async (term: string) => {
-  const config = requestConfig("GET", null);
+const updatePayments = async (data: RentPaymentType) => {
+  const config = requestConfig("PATCH", data);
 
   try {
-    const res = await fetch(api + `cliente/search?term=${term}`, config);
+    const res = await fetch(api + `pagamentoAluguel/atualizar`, config);
     if (!res.ok) {
       const error = await res.json();
       throw new Error(error.message || "Erro ao processar a requisição.");
@@ -69,10 +63,10 @@ const getClientsByNameAndDocument = async (term: string) => {
   }
 };
 
-const clientService = {
-  getClients,
-  insertClient,
-  getClientsByNameAndDocument,
+const rentPaymenService = {
+  generatePayments,
+  getRentPayments,
+  updatePayments,
 };
 
-export default clientService;
+export default rentPaymenService;
